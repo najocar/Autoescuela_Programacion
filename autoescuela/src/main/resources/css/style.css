@@ -9,3 +9,11 @@
 .boton:hover{
     -fx-background-color: #4b76ef;
 }
+
+.deleteButton{
+    -fx-background-color:  #FF7373;
+}
+
+.deleteButton:hover{
+    -fx-background-color: #FF8686;
+}

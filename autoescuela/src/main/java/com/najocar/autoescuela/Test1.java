@@ -16,5 +16,6 @@ public class Test1 {
         for (Alumno alumno: alumnos) {
             System.out.println(alumno);
         }
+
     }
 }

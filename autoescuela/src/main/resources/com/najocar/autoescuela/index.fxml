@@ -19,9 +19,25 @@
                   <Font size="27.0" />
                </font>
             </Label>
-            <TextField layoutX="37.0" layoutY="209.0" prefHeight="53.0" prefWidth="203.0" promptText="DNI" />
-            <TextField layoutX="37.0" layoutY="300.0" prefHeight="53.0" prefWidth="203.0" promptText="Nombre" />
-            <Button layoutX="37.0" layoutY="398.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="203.0" styleClass="boton" text="Registrar Alumno" textFill="WHITE">
+            <TextField fx:id="dniField" layoutX="37.0" layoutY="209.0" prefHeight="53.0" prefWidth="203.0" promptText="DNI" />
+            <TextField fx:id="nombreField" layoutX="37.0" layoutY="300.0" prefHeight="53.0" prefWidth="203.0" promptText="Nombre" />
+            <Button fx:id="addButton" layoutX="37.0" layoutY="398.0" mnemonicParsing="false" onAction="#insertAlumno" prefHeight="53.0" prefWidth="203.0" styleClass="boton" text="Registrar Alumno" textFill="WHITE">
+               <font>
+                  <Font name="Verdana" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="removeButton" layoutX="37.0" layoutY="486.0" mnemonicParsing="false" onAction="#removeAlumno" prefHeight="53.0" prefWidth="203.0" styleClass="deleteButton" text="Eliminar Alumno" textFill="WHITE">
+               <font>
+                  <Font name="Verdana" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="updateButton" layoutX="37.0" layoutY="567.0" mnemonicParsing="false" onAction="#updateAlumno" prefHeight="53.0" prefWidth="203.0" styleClass="boton" text="Actualizar Alumno" textFill="WHITE">
                <font>
                   <Font name="Verdana" size="12.0" />
                </font>
@@ -34,17 +50,19 @@
       <Pane fx:id="navbar" prefHeight="54.0" prefWidth="1000.0" style="-fx-background-color: #ACC2C5; -fx-effect: dropshadow( gaussian, rgba(0, 0, 0, 0.3), 10, 0.1, 0.0, 0.0 );" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Button fx:id="closeButton" layoutX="961.0" layoutY="15.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 5px;" text="X" />
-            <Button layoutX="923.0" layoutY="15.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 5px;" text="-" />
+            <Button layoutX="923.0" layoutY="15.0" mnemonicParsing="false" onAction="#minimizeWindow" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 5px;" text="-" />
          </children></Pane>
       <Label layoutX="70.0" layoutY="95.0" styleClass="bold" text="Alumnos">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <TableView fx:id="tabla" fixedCellSize="30.0" layoutX="70.0" layoutY="183.0" prefHeight="480.0" prefWidth="569.0">
+      <TableView fx:id="tabla" fixedCellSize="30.0" layoutX="71.0" layoutY="183.0" prefHeight="480.0" prefWidth="569.0">
         <columns>
-          <TableColumn prefWidth="158.0" text="DNI" />
-          <TableColumn minWidth="2.0" prefWidth="158.0" text="Nombre" />
+          <TableColumn fx:id="colDni" prefWidth="158.0" text="DNI" />
+          <TableColumn fx:id="colNombre" minWidth="2.0" prefWidth="158.0" text="Nombre" />
+            <TableColumn prefWidth="126.5" text="Column X" />
+            <TableColumn fx:id="colBorrar" prefWidth="126.5" text="Borrar" />
         </columns>
       </TableView>
    </children>
