@@ -1,7 +1,9 @@
 package com.najocar.autoescuela.controllers;
 
+import com.najocar.autoescuela.App;
 import com.najocar.autoescuela.model.dao.AlumnoDAO;
 import com.najocar.autoescuela.model.domain.Alumno;
+import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -17,6 +19,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
@@ -39,6 +42,9 @@ public class IndexController {
     private Button removeButton;
     @FXML
     private Button updateButton;
+
+    @FXML
+    private Button infoAlumno;
     @FXML
     private TextField dniField;
     @FXML
@@ -49,6 +55,8 @@ public class IndexController {
     private int positionInTable;
 
     private AlumnoDAO adao = new AlumnoDAO();
+
+    ControlDni controlDni = ControlDni.getInstance();
 
 
     private double xOffset = 0;
@@ -73,6 +81,7 @@ public class IndexController {
 
         removeButton.setDisable(true);
         updateButton.setDisable(true);
+        infoAlumno.setDisable(true);
 
         navbar.setOnMousePressed(event -> {
             xOffset = event.getSceneX();
@@ -98,11 +107,13 @@ public class IndexController {
     @FXML
     public void insertAlumno(ActionEvent event) throws SQLException {
         Alumno alumno = new Alumno();
-        alumno.setDni(dniField.getText());
-        alumno.setName(nombreField.getText());
-        alumnos.add(alumno);
-        adao.save(alumno);
-        clearFields();
+        if(!dniField.getText().isEmpty() && !nombreField.getText().isEmpty()) {
+            alumno.setDni(dniField.getText());
+            alumno.setName(nombreField.getText());
+            alumnos.add(alumno);
+            adao.save(alumno);
+            clearFields();
+        }
     }
 
     @FXML
@@ -112,8 +123,13 @@ public class IndexController {
         alumno.setName(nombreField.getText());
         adao.save(alumno);
         alumnos.set(positionInTable, alumno);
+        tabla.getSelectionModel().clearSelection();
         clearFields();
+        removeButton.setDisable(true);
         updateButton.setDisable(true);
+        infoAlumno.setDisable(true);
+        addButton.setDisable(false);
+        dniField.setDisable(false);
     }
 
     @FXML
@@ -130,7 +146,13 @@ public class IndexController {
 
         adao.delete(adao.findById(alumnos.get(positionInTable).getDni()));
         alumnos.remove(alumnos.get(positionInTable));
+        tabla.getSelectionModel().clearSelection();
         clearFields();
+        removeButton.setDisable(true);
+        updateButton.setDisable(true);
+        infoAlumno.setDisable(true);
+        addButton.setDisable(false);
+        dniField.setDisable(false);
     }
 
     private final ListChangeListener<Alumno> selectAlumno =
@@ -161,6 +183,9 @@ public class IndexController {
             nombreField.setText(alumno.getName());
             removeButton.setDisable(false);
             updateButton.setDisable(false);
+            infoAlumno.setDisable(false);
+            addButton.setDisable(true);
+            dniField.setDisable(true);
         }
     }
 
@@ -169,5 +194,9 @@ public class IndexController {
         nombreField.clear();
     }
 
+    public void changeView() throws IOException {
+        controlDni.setDni(alumnos.get(positionInTable).getDni());
+        App.setRoot("alumnInfo");
+    }
 
 }

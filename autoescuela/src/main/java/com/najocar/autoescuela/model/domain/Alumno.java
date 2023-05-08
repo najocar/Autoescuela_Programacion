@@ -42,6 +42,7 @@ public class Alumno {
         return clases;
     }
 
+
     public void setClases(List<Clase> clases) {
         this.clases = clases;
     }

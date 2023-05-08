@@ -16,7 +16,11 @@ public class AlumnoDAO implements DAO<Alumno> {
     private final static String FINBYID = "SELECT * from alumnos WHERE dni=?";
     private final static String INSERT = "INSERT INTO alumnos (dni,nombre) VALUES (?,?)";
     private final static String UPDATE = "UPDATE alumnos SET nombre=? WHERE dni=?";
+
+    private final static String UPDATEJOIN = "UPDATE clases_alumnoes SET alumnoes_dni=? WHERE dni=?";
     private final static String DELETE = "DELETE FROM alumnos WHERE dni=?";
+
+    private final static String DELETECLASES = "DELETE FROM clases_alumnoes WHERE alumnoes_dni=?";
     private final static String FINDBYCLASE = "SELECT * from clases_alumnoes WHERE clase_id=?";
 
     private final static String FINDALLCLASES = "SELECT c.id, c.nombre, c.precio from clases_alumnoes a join clases c on a.clase_id = c.id WHERE alumnoes_dni = ?";
@@ -85,7 +89,16 @@ public class AlumnoDAO implements DAO<Alumno> {
                     pst.executeUpdate();
                 }
                 /** Clases */
+                /*
+                if (alumnoAllClases(entity.getDni()).size() > 0) {
+                    try (PreparedStatement pst = this.conn.prepareStatement(UPDATEJOIN)) {
+                        pst.setString(1, entity.getDni());
+                        pst.setString(2, entity.getDni());
+                        pst.executeUpdate();
+                    }
+                }
 
+                 */
             }
             result = entity;
         }
@@ -98,6 +111,12 @@ public class AlumnoDAO implements DAO<Alumno> {
         if (entity != null) {
             Alumno a = findById(entity.getDni());
             if (a != null) {
+                if (alumnoAllClases(entity.getDni()).size() > 0) {
+                    try (PreparedStatement pst = this.conn.prepareStatement(DELETECLASES)) {
+                        pst.setString(1, entity.getDni());
+                        pst.executeUpdate();
+                    }
+                }
                 try (PreparedStatement pst = this.conn.prepareStatement(DELETE)) {
                     pst.setString(1, entity.getDni());
                     pst.executeUpdate();

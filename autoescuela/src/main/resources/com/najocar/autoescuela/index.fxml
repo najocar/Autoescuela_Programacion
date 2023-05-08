@@ -45,6 +45,14 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
+            <Button fx:id="infoAlumno" layoutX="37.0" layoutY="642.0" mnemonicParsing="false" onAction="#changeView" prefHeight="53.0" prefWidth="203.0" styleClass="boton" text="Información Alumno" textFill="WHITE">
+               <font>
+                  <Font name="Verdana" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
          </children>
       </Pane>
       <Pane fx:id="navbar" prefHeight="54.0" prefWidth="1000.0" style="-fx-background-color: #ACC2C5; -fx-effect: dropshadow( gaussian, rgba(0, 0, 0, 0.3), 10, 0.1, 0.0, 0.0 );" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
