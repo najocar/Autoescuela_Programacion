@@ -35,8 +35,8 @@ public class Test2 {
 
         //System.out.println(cdao.findById(1));
         //System.out.println(adao.findById("12345p"));
-        //System.out.println(adao.alumnoAllClases("12345p").size());
-        adao.save(a);
+        System.out.println(adao.alumnoAllClases("12345p").size());
+        //adao.save(a);
 
     }
 }

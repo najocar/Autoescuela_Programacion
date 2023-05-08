@@ -16,7 +16,6 @@ public class AlumnoDAO implements DAO<Alumno> {
     private final static String FINBYID = "SELECT * from alumnos WHERE dni=?";
     private final static String INSERT = "INSERT INTO alumnos (dni,nombre) VALUES (?,?)";
     private final static String UPDATE = "UPDATE alumnos SET nombre=? WHERE dni=?";
-
     private final static String UPDATEJOIN = "UPDATE clases_alumnoes SET alumnoes_dni=? WHERE dni=?";
     private final static String DELETE = "DELETE FROM alumnos WHERE dni=?";
 
@@ -35,6 +34,11 @@ public class AlumnoDAO implements DAO<Alumno> {
         this.conn = ConnectionMySQL.getConnect();
     }
 
+    /**
+     * find all students
+     * @return List of students
+     * @throws SQLException
+     */
     @Override
     public List<Alumno> findAll() throws SQLException {
         List<Alumno> result = new ArrayList();
@@ -51,6 +55,12 @@ public class AlumnoDAO implements DAO<Alumno> {
         return result;
     }
 
+    /**
+     * find student by dni
+     * @param id dni of student to find
+     * @return student
+     * @throws SQLException
+     */
     @Override
     public Alumno findById(String id) throws SQLException {
         Alumno result = null;
@@ -67,28 +77,37 @@ public class AlumnoDAO implements DAO<Alumno> {
         return result;
     }
 
+    /**
+     * insert student
+     * @param entity student to insert
+     * @return inserted student
+     * @throws SQLException
+     */
     @Override
     public Alumno save(Alumno entity) throws SQLException {
         Alumno result = new Alumno();
-        if (entity != null) {
-            Alumno a = findById(entity.getDni());
-            if (a == null) {
-                //INSERT
-                try (PreparedStatement pst = this.conn.prepareStatement(INSERT)) {
-                    pst.setString(1, entity.getDni());
-                    pst.setString(2, entity.getName());
-                    pst.executeUpdate();
-                    /** Clases */
+        if (entity == null) {
+            return result;
+        }
 
-                }
-            } else {
-                //UPDATE
-                try (PreparedStatement pst = this.conn.prepareStatement(UPDATE)) {
-                    pst.setString(1, entity.getName());
-                    pst.setString(2, entity.getDni());
-                    pst.executeUpdate();
-                }
+        Alumno a = findById(entity.getDni());
+        if (a == null) {
+            //INSERT
+            try (PreparedStatement pst = this.conn.prepareStatement(INSERT)) {
+                pst.setString(1, entity.getDni());
+                pst.setString(2, entity.getName());
+                pst.executeUpdate();
                 /** Clases */
+
+            }
+        } else {
+            //UPDATE
+            try (PreparedStatement pst = this.conn.prepareStatement(UPDATE)) {
+                pst.setString(1, entity.getName());
+                pst.setString(2, entity.getDni());
+                pst.executeUpdate();
+            }
+            /** Clases */
                 /*
                 if (alumnoAllClases(entity.getDni()).size() > 0) {
                     try (PreparedStatement pst = this.conn.prepareStatement(UPDATEJOIN)) {
@@ -97,31 +116,39 @@ public class AlumnoDAO implements DAO<Alumno> {
                         pst.executeUpdate();
                     }
                 }
-
-                 */
-            }
-            result = entity;
+               */
         }
+        result = entity;
         return result;
     }
 
+    /**
+     * Delete alumn from database
+     * @param entity alumn  to remove
+     * @return eliminated student
+     * @throws SQLException
+     */
     @Override
     public Alumno delete(Alumno entity) throws SQLException {
         Alumno result = new Alumno();
-        if (entity != null) {
-            Alumno a = findById(entity.getDni());
-            if (a != null) {
-                if (alumnoAllClases(entity.getDni()).size() > 0) {
-                    try (PreparedStatement pst = this.conn.prepareStatement(DELETECLASES)) {
-                        pst.setString(1, entity.getDni());
-                        pst.executeUpdate();
-                    }
-                }
-                try (PreparedStatement pst = this.conn.prepareStatement(DELETE)) {
-                    pst.setString(1, entity.getDni());
-                    pst.executeUpdate();
-                }
+        if (entity == null) {
+            return result;
+        }
+
+        Alumno a = findById(entity.getDni());
+        if (a == null) {
+            return result;
+        }
+
+        if (alumnoAllClases(entity.getDni()).size() > 0) {
+            try (PreparedStatement pst = this.conn.prepareStatement(DELETECLASES)) {
+                pst.setString(1, entity.getDni());
+                pst.executeUpdate();
             }
+        }
+        try (PreparedStatement pst = this.conn.prepareStatement(DELETE)) {
+            pst.setString(1, entity.getDni());
+            pst.executeUpdate();
         }
 
         return result;
@@ -132,44 +159,62 @@ public class AlumnoDAO implements DAO<Alumno> {
 
     }
 
+    /**
+     * Find all students by class
+     * @param a class to find students
+     * @return List of students found in the class
+     * @throws SQLException
+     */
     public List<Alumno> findByClase(Clase a) throws SQLException {
         List<Alumno> result = null;
-        if (a != null) {
-            result = new ArrayList();
-            ClaseDAO cdao = new ClaseDAO(this.conn);
-            Clase _a = cdao.findById(a.getId());
-            if (_a != null) {
-                try (PreparedStatement pst = this.conn.prepareStatement(FINDBYCLASE)) {
-                    pst.setInt(1, a.getId());
-                    try (ResultSet res = pst.executeQuery()) {
-                        while (res.next()) {
-                            Alumno l = new Alumno();
-                            l.setDni(res.getString("dni"));
-                            l.setName(res.getString("nombre"));
-                            l.addClase(_a);
-                            result.add(l);
-                        }
-                    }
+        if (a == null) {
+            return result;
+        }
+
+        result = new ArrayList();
+        ClaseDAO cdao = new ClaseDAO(this.conn);
+        Clase _a = cdao.findById(a.getId());
+        if (_a == null) {
+            return result;
+        }
+
+        try (PreparedStatement pst = this.conn.prepareStatement(FINDBYCLASE)) {
+            pst.setInt(1, a.getId());
+            try (ResultSet res = pst.executeQuery()) {
+                while (res.next()) {
+                    Alumno l = new Alumno();
+                    l.setDni(res.getString("dni"));
+                    l.setName(res.getString("nombre"));
+                    l.addClase(_a);
+                    result.add(l);
                 }
             }
         }
         return result;
     }
 
+    /**
+     * all students classes
+     * @param dni dni of student
+     * @return list of classes the student is in
+     * @throws SQLException
+     */
     public List<Clase> alumnoAllClases(String dni) throws SQLException {
         List<Clase> result = null;
-        if(dni!= null && findById(dni)!= null){
-            result = new ArrayList();
-            try (PreparedStatement pst = this.conn.prepareStatement(FINDALLCLASES)) {
-                pst.setString(1, dni);
-                try (ResultSet res = pst.executeQuery()) {
-                    while (res.next()) {
-                        Clase a = new Clase();
-                        a.setId(res.getInt("id"));
-                        a.setName(res.getString("nombre"));
-                        a.setPrice(res.getDouble("precio"));
-                        result.add(a);
-                    }
+        if (dni == null && findById(dni) == null) {
+            return result;
+        }
+
+        result = new ArrayList();
+        try (PreparedStatement pst = this.conn.prepareStatement(FINDALLCLASES)) {
+            pst.setString(1, dni);
+            try (ResultSet res = pst.executeQuery()) {
+                while (res.next()) {
+                    Clase a = new Clase();
+                    a.setId(res.getInt("id"));
+                    a.setName(res.getString("nombre"));
+                    a.setPrice(res.getDouble("precio"));
+                    result.add(a);
                 }
             }
         }

@@ -11,12 +11,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -49,6 +47,11 @@ public class IndexController {
     private TextField dniField;
     @FXML
     private TextField nombreField;
+    @FXML
+    private Label labelDni;
+    @FXML
+    private Label labelNombre;
+
 
     private ObservableList<Alumno> alumnos;
 
@@ -62,21 +65,10 @@ public class IndexController {
     private double xOffset = 0;
     private double yOffset = 0;
 
-
-    @FXML
-    private void closeWindow(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
-    }
-
-    @FXML
-    private void minimizeWindow(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.setIconified(true);
-    }
-
+    /**
+     * Se inicia al comienzo de la aplicación
+     * @throws SQLException
+     */
     public void initialize() throws SQLException {
 
         removeButton.setDisable(true);
@@ -104,15 +96,55 @@ public class IndexController {
         tablaAlumnos.addListener(selectAlumno);
     }
 
+    /**
+     * Close window
+     * @param event
+     */
+    @FXML
+    private void closeWindow(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
+    }
+
+    /**
+     * minimize window
+     * @param event
+     */
+    @FXML
+    private void minimizeWindow(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.setIconified(true);
+    }
+
+    @FXML
+    public void generateTable() throws SQLException {
+        List<Alumno> aux = adao.findAll();
+        alumnos.setAll(aux);
+
+        this.tabla.setItems(alumnos);
+    }
+
+    public void changeView() throws IOException {
+        controlDni.setDni(alumnos.get(positionInTable).getDni());
+        App.setRoot("alumnInfo");
+    }
+
     @FXML
     public void insertAlumno(ActionEvent event) throws SQLException {
         Alumno alumno = new Alumno();
         if(!dniField.getText().isEmpty() && !nombreField.getText().isEmpty()) {
             alumno.setDni(dniField.getText());
             alumno.setName(nombreField.getText());
-            alumnos.add(alumno);
-            adao.save(alumno);
-            clearFields();
+            if (adao.findById(alumno.getDni()) == null){
+                alumnos.add(alumno);
+                adao.save(alumno);
+                clearFields();
+            }else {
+                labelDni.setText("El DNI ya a sido registrado");
+                labelDni.setTextFill(Color.RED);
+            }
         }
     }
 
@@ -125,19 +157,7 @@ public class IndexController {
         alumnos.set(positionInTable, alumno);
         tabla.getSelectionModel().clearSelection();
         clearFields();
-        removeButton.setDisable(true);
-        updateButton.setDisable(true);
-        infoAlumno.setDisable(true);
-        addButton.setDisable(false);
-        dniField.setDisable(false);
-    }
 
-    @FXML
-    public void generateTable() throws SQLException {
-        List<Alumno> aux = adao.findAll();
-        alumnos.setAll(aux);
-
-        this.tabla.setItems(alumnos);
     }
 
 
@@ -148,11 +168,7 @@ public class IndexController {
         alumnos.remove(alumnos.get(positionInTable));
         tabla.getSelectionModel().clearSelection();
         clearFields();
-        removeButton.setDisable(true);
-        updateButton.setDisable(true);
-        infoAlumno.setDisable(true);
-        addButton.setDisable(false);
-        dniField.setDisable(false);
+
     }
 
     private final ListChangeListener<Alumno> selectAlumno =
@@ -186,17 +202,22 @@ public class IndexController {
             infoAlumno.setDisable(false);
             addButton.setDisable(true);
             dniField.setDisable(true);
+            labelDni.setText("Dni");
+            labelNombre.setText("Introduce un nuevo nombre");
         }
     }
 
     public void clearFields() {
         dniField.clear();
         nombreField.clear();
-    }
-
-    public void changeView() throws IOException {
-        controlDni.setDni(alumnos.get(positionInTable).getDni());
-        App.setRoot("alumnInfo");
+        removeButton.setDisable(true);
+        updateButton.setDisable(true);
+        infoAlumno.setDisable(true);
+        addButton.setDisable(false);
+        dniField.setDisable(false);
+        labelDni.setText("Introduce un DNI");
+        labelNombre.setText("Introduce un Nombre");
+        labelDni.setTextFill(Color.BLACK);
     }
 
 }

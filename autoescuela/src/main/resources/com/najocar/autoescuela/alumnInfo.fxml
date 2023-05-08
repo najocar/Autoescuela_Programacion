@@ -18,7 +18,7 @@
                   <Font size="27.0" />
                </font>
             </Label>
-            <Button fx:id="addButton" layoutX="28.0" layoutY="205.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="99.0" styleClass="boton" text="Registrar B" textFill="WHITE" textOverrun="CLIP">
+            <Button fx:id="addToB" layoutX="28.0" layoutY="205.0" mnemonicParsing="false" onAction="#addToB" prefHeight="54.0" prefWidth="99.0" styleClass="boton" text="Registrar B" textFill="WHITE" textOverrun="CLIP">
                <font>
                   <Font name="Verdana" size="12.0" />
                </font>
@@ -26,7 +26,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="addButton1" layoutX="150.0" layoutY="205.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="99.0" styleClass="deleteButton" text="Borrar B" textFill="WHITE" textOverrun="CLIP">
+            <Button fx:id="removeFromB" layoutX="150.0" layoutY="205.0" mnemonicParsing="false" onAction="#removeFromB" prefHeight="54.0" prefWidth="99.0" styleClass="deleteButton" text="Borrar B" textFill="WHITE" textOverrun="CLIP">
                <font>
                   <Font name="Verdana" size="12.0" />
                </font>
@@ -90,6 +90,11 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
+            <Label fx:id="errorLabel" layoutX="28.0" layoutY="500.0" text="Ya está inscrito a esta clase" textFill="RED" visible="false">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       <Pane fx:id="navbar" prefHeight="54.0" prefWidth="1000.0" style="-fx-background-color: #ACC2C5; -fx-effect: dropshadow( gaussian, rgba(0, 0, 0, 0.3), 10, 0.1, 0.0, 0.0 );" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -104,8 +109,8 @@
       </Label>
       <TableView fx:id="tabla" fixedCellSize="30.0" layoutX="71.0" layoutY="183.0" prefHeight="402.0" prefWidth="568.0">
          <columns>
-            <TableColumn fx:id="colNombre" prefWidth="284.0" resizable="false" text="DNI" />
-            <TableColumn fx:id="colPrecio" minWidth="2.0" prefWidth="284.0" resizable="false" text="Nombre" />
+            <TableColumn fx:id="colClase" prefWidth="284.0" resizable="false" text="Clase" />
+            <TableColumn fx:id="colPrecio" minWidth="2.0" prefWidth="284.0" resizable="false" text="Precio" />
          </columns>
       </TableView>
       <Label layoutX="70.0" layoutY="631.0" styleClass="bold" text="Precio total:">
@@ -113,7 +118,7 @@
             <Font size="36.0" />
          </font>
       </Label>
-      <Label fx:id="totalPrice" layoutX="268.0" layoutY="631.0" styleClass="bold" text="0">
+      <Label fx:id="totalPrice" layoutX="283.0" layoutY="631.0" styleClass="bold" text="0">
          <font>
             <Font size="36.0" />
          </font>

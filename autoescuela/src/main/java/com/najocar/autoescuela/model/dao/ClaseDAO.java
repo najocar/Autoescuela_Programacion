@@ -21,6 +21,7 @@ public class ClaseDAO implements DAO<Clase>{
     private final static String DELETE ="DELETE FROM clases WHERE id=?";
 
     private final static String SAVERELACION ="INSERT INTO clases_alumnoes (clase_id, alumnoes_dni) VALUES (?,?)";
+    private final static String DELETERELACION ="DELETE FROM clases_alumnoes WHERE clase_id = ? and alumnoes_dni = ?";
 
     private Connection conn;
     public ClaseDAO(Connection conn) {
@@ -29,6 +30,12 @@ public class ClaseDAO implements DAO<Clase>{
     public ClaseDAO() {
         this.conn= ConnectionMySQL.getConnect();
     }
+
+    /**
+     * find all classes
+     * @return list of classes
+     * @throws SQLException
+     */
     @Override
     public List findAll() throws SQLException {
         List<Clase> result = new ArrayList();
@@ -46,6 +53,12 @@ public class ClaseDAO implements DAO<Clase>{
         return result;
     }
 
+    /**
+     * find class by name
+     * @param nombre name of the class
+     * @return class or null if not found
+     * @throws SQLException
+     */
     @Override
     public Clase findById(String nombre) throws SQLException {
         Clase result = null;
@@ -63,6 +76,12 @@ public class ClaseDAO implements DAO<Clase>{
         return result;
     }
 
+    /**
+     * find class by id
+     * @param id id of the class
+     * @return class or null if not found
+     * @throws SQLException
+     */
     public Clase findById(int id) throws SQLException {
         Clase result = null;
         try(PreparedStatement pst=this.conn.prepareStatement(FINBYID)){
@@ -79,49 +98,64 @@ public class ClaseDAO implements DAO<Clase>{
         return result;
     }
 
+    /**
+     * save a clase
+     * @param entity clase to save
+     * @return clase saved
+     * @throws SQLException
+     */
     @Override
     public Clase save(Clase entity) throws SQLException {
         Clase result = new Clase();
-        if(entity!=null) {
-            Clase a = findById(entity.getName());
-            if(a == null) {
-                //INSERT
-                try(PreparedStatement pst=this.conn.prepareStatement(INSERT)){
-                    pst.setString(1, entity.getName());
-                    pst.setDouble(2, entity.getPrice());
-                    pst.executeUpdate();
-                    /** Clases */
-
-                }
-            }else {
-                //UPDATE
-                try(PreparedStatement pst=this.conn.prepareStatement(UPDATE)){
-                    pst.setString(1, entity.getName());
-                    pst.setDouble(2, entity.getPrice());
-                    pst.setInt(3, a.getId());
-                    pst.executeUpdate();
-                }
+        if(entity==null) {
+            return result;
+        }
+        Clase a = findById(entity.getName());
+        if(a == null) {
+            //INSERT
+            try(PreparedStatement pst=this.conn.prepareStatement(INSERT)){
+                pst.setString(1, entity.getName());
+                pst.setDouble(2, entity.getPrice());
+                pst.executeUpdate();
                 /** Clases */
 
             }
-            result=entity;
+        }else {
+            //UPDATE
+            try(PreparedStatement pst=this.conn.prepareStatement(UPDATE)){
+                pst.setString(1, entity.getName());
+                pst.setDouble(2, entity.getPrice());
+                pst.setInt(3, a.getId());
+                pst.executeUpdate();
+            }
+            /** Clases */
+
         }
+        result=entity;
         return result;
     }
 
+    /**
+     * delete a clase
+     * @param entity clase to delete
+     * @return clase deleted
+     * @throws SQLException
+     */
     @Override
     public Clase delete(Clase entity) throws SQLException {
         Clase result = new Clase();
-        if (entity != null){
-            Clase a = findById(entity.getId());
-            if (a != null){
-                try(PreparedStatement pst=this.conn.prepareStatement(DELETE)){
-                    pst.setInt(1, entity.getId());
-                    pst.executeUpdate();
-                }
-            }
+        if (entity == null){
+            return result;
         }
+        Clase a = findById(entity.getId());
+        if (a == null){
+            return result;
+        }
+        try(PreparedStatement pst=this.conn.prepareStatement(DELETE)){
+            pst.setInt(1, entity.getId());
+            pst.executeUpdate();
 
+        }
         return result;
     }
 
@@ -130,6 +164,12 @@ public class ClaseDAO implements DAO<Clase>{
 
     }
 
+    /**
+     * add student to the class
+     * @param id id of the class
+     * @param dni dni of the student
+     * @return list of classes that the student is enrolled in
+     */
     public List<Clase> insertAlumno(int id, String dni) throws SQLException {
         AlumnoDAO adao = new AlumnoDAO(this.conn);
         Alumno alumno = adao.findById(dni);
@@ -148,10 +188,26 @@ public class ClaseDAO implements DAO<Clase>{
             pst.setString(2, alumno.getDni());
             pst.executeUpdate();
         }
+        return alumno.getClases();
+    }
 
+    /**
+     * remove student to the class
+     * @param id id of the class
+     * @param dni dni of the student
+     * @return list of classes that the student is enrolled in
+     * @throws SQLException
+     */
+    public List<Clase> removeAlumno(int id, String dni) throws SQLException {
+        AlumnoDAO adao = new AlumnoDAO(this.conn);
+        Alumno alumno = adao.findById(dni);
+        Clase clase = findById(id);
 
-
-
+        try(PreparedStatement pst=this.conn.prepareStatement(DELETERELACION)){
+            pst.setInt(1, clase.getId());
+            pst.setString(2, alumno.getDni());
+            pst.executeUpdate();
+        }
         return alumno.getClases();
     }
 }
