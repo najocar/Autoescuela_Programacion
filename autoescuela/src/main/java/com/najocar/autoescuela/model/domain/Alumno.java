@@ -7,16 +7,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Alumno {
+public class Alumno extends Persona {
+    /*
     private String dni;
     private String name;
+    */
 
     private List<Clase> clases = null;
 
     public Alumno(String dni, String name) {
+        super(dni, name);
+    }
+
+    public Alumno() {
+        super();
+    }
+
+    /*
+    public Alumno(String dni, String name) {
         this.dni = dni;
         this.name = name;
     }
+
 
     public Alumno() {
         this("","");
@@ -72,5 +84,21 @@ public class Alumno {
                 "dni='" + dni + '\'' +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+     */
+    public List<Clase> getClases() {
+        return clases;
+    }
+
+
+    public void setClases(List<Clase> clases) {
+        this.clases = clases;
+    }
+    public void addClase(Clase clase) {
+        if(this.clases==null) {
+            this.clases = new ArrayList<>();
+        }
+        this.clases.add(clase);
     }
 }

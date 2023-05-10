@@ -12,5 +12,7 @@ module com.najocar.autoescuela {
     opens com.najocar.autoescuela.controllers to javafx.fxml;
     opens com.najocar.autoescuela.model.connections to java.xml.bind;
     opens com.najocar.autoescuela.model.domain to javafx.base;
+    exports com.najocar.autoescuela.utils;
+    opens com.najocar.autoescuela.utils to javafx.fxml;
 
 }

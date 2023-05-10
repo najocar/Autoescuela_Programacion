@@ -4,9 +4,9 @@ import com.najocar.autoescuela.model.dao.AlumnoDAO;
 import com.najocar.autoescuela.model.dao.ClaseDAO;
 import com.najocar.autoescuela.model.domain.Alumno;
 import com.najocar.autoescuela.model.domain.Clase;
+import com.najocar.autoescuela.utils.Logger;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class Test2 {
     public static void main(String[] args) throws SQLException {
@@ -37,6 +37,7 @@ public class Test2 {
         //System.out.println(adao.findById("12345p"));
         System.out.println(adao.alumnoAllClases("12345p").size());
         //adao.save(a);
+        Logger.logger.info("hola");
 
     }
 }

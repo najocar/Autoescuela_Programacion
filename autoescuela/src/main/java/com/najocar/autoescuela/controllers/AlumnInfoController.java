@@ -40,6 +40,10 @@ public class AlumnInfoController {
     private Label totalPrice;
     @FXML
     private Label errorLabel;
+    @FXML
+    private Label labelNombre;
+    @FXML
+    private Label labelDni;
 
     private ObservableList<Clase> clases;
 
@@ -84,6 +88,9 @@ public class AlumnInfoController {
             stage.setY(event.getScreenY() - yOffset);
         });
 
+        labelDni.setText(controlDni.getDni());
+        labelNombre.setText(adao.findById(controlDni.getDni()).getName());
+
         clases = FXCollections.observableArrayList();
         this.colClase.setCellValueFactory(new PropertyValueFactory("name"));
         this.colPrecio.setCellValueFactory(new PropertyValueFactory("price"));
@@ -104,21 +111,56 @@ public class AlumnInfoController {
         this.tabla.setItems(clases);
     }
 
+    // add buttons
     @FXML
     public void addToB() throws SQLException {
-        if (!clases.contains(cdao.findById(2))) {
-            cdao.insertAlumno(2, controlDni.getDni());
+        this.add(1);
+    }
+    @FXML
+    public void addToA() throws SQLException {
+        this.add(2);
+    }
+    @FXML
+    public void addToA2() throws SQLException {
+        this.add(3);
+    }
+    @FXML
+    public void addToA1() throws SQLException {
+        this.add(4);
+    }
+
+
+    // remove buttons
+    @FXML
+    public void removeFromB() throws SQLException {
+        this.remove(1);
+    }
+    @FXML
+    public void removeFromA() throws SQLException {
+        this.remove(2);
+    }
+    @FXML
+    public void removeFromA2() throws SQLException {
+        this.remove(3);
+    }
+    @FXML
+    public void removeFromA1() throws SQLException {
+        this.remove(4);
+    }
+
+    private void add(int i) throws SQLException{
+        if (!clases.contains(cdao.findById(i))) {
+            cdao.insertAlumno(i, controlDni.getDni());
             generateTable();
         } else {
             error(1);
         }
     }
 
-    @FXML
-    public void removeFromB() throws SQLException {
-        if (clases.contains(cdao.findById(2))) {
+    private void remove(int i) throws SQLException{
+        if (clases.contains(cdao.findById(i))) {
             quitError();
-            cdao.removeAlumno(2, controlDni.getDni());
+            cdao.removeAlumno(i, controlDni.getDni());
             generateTable();
         } else {
             //

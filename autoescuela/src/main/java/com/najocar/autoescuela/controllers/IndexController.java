@@ -3,6 +3,7 @@ package com.najocar.autoescuela.controllers;
 import com.najocar.autoescuela.App;
 import com.najocar.autoescuela.model.dao.AlumnoDAO;
 import com.najocar.autoescuela.model.domain.Alumno;
+import com.najocar.autoescuela.utils.Logger;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -135,14 +136,20 @@ public class IndexController {
     public void insertAlumno(ActionEvent event) throws SQLException {
         Alumno alumno = new Alumno();
         if(!dniField.getText().isEmpty() && !nombreField.getText().isEmpty()) {
-            alumno.setDni(dniField.getText());
-            alumno.setName(nombreField.getText());
-            if (adao.findById(alumno.getDni()) == null){
-                alumnos.add(alumno);
-                adao.save(alumno);
-                clearFields();
+            if(validateDNI(dniField.getText())){
+                alumno.setDni(dniField.getText().toUpperCase());
+                alumno.setName(nombreField.getText());
+                if (adao.findById(alumno.getDni()) == null){
+                    alumnos.add(alumno);
+                    adao.save(alumno);
+                    Logger.info("Alumno registrado: " + alumno.toString());
+                    clearFields();
+                }else {
+                    labelDni.setText("El DNI ya a sido registrado");
+                    labelDni.setTextFill(Color.RED);
+                }
             }else {
-                labelDni.setText("El DNI ya a sido registrado");
+                labelDni.setText("DNI no válido");
                 labelDni.setTextFill(Color.RED);
             }
         }
@@ -154,6 +161,7 @@ public class IndexController {
         alumno.setDni(dniField.getText());
         alumno.setName(nombreField.getText());
         adao.save(alumno);
+        Logger.info("Alumno actualizado: " + alumno.toString());
         alumnos.set(positionInTable, alumno);
         tabla.getSelectionModel().clearSelection();
         clearFields();
@@ -165,6 +173,7 @@ public class IndexController {
     public void removeAlumno(ActionEvent event) throws SQLException {
 
         adao.delete(adao.findById(alumnos.get(positionInTable).getDni()));
+        Logger.info("Alumno eliminado: " + alumnos.get(positionInTable).toString());
         alumnos.remove(alumnos.get(positionInTable));
         tabla.getSelectionModel().clearSelection();
         clearFields();
@@ -193,6 +202,7 @@ public class IndexController {
     private void takeAlumnoSelected() {
         final Alumno alumno = getAlumnoSelected();
         positionInTable = alumnos.indexOf(alumno);
+        labelDni.setTextFill(Color.BLACK);
 
         if (alumno != null) {
             dniField.setText(alumno.getDni());
@@ -218,6 +228,25 @@ public class IndexController {
         labelDni.setText("Introduce un DNI");
         labelNombre.setText("Introduce un Nombre");
         labelDni.setTextFill(Color.BLACK);
+    }
+
+    public static boolean validateDNI(String dni) {
+        String letras = "TRWAGMYFPDXBNJZSQVHLCKE";
+        boolean valido = true;
+
+        if (dni.length() != 9) {
+            valido = false;
+        } else {
+            char letra = dni.charAt(8);
+            int num = Integer.parseInt(dni.substring(0, 8));
+            int resto = num % 23;
+            char letraCalculada = letras.charAt(resto);
+            if (Character.toUpperCase(letra) != letraCalculada) {
+                valido = false;
+            }
+        }
+
+        return valido;
     }
 
 }

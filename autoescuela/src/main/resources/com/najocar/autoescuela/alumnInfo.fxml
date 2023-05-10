@@ -13,12 +13,12 @@
    <children>
       <Pane layoutX="800.0" prefHeight="750.0" prefWidth="277.0" style="-fx-background-color: #BABABA;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="41.0" layoutY="95.0" prefHeight="81.0" prefWidth="195.0" style="-fx-font-weight: bold;" styleClass="bold" text="Inscripciones" wrapText="true">
+            <Label layoutX="27.0" layoutY="149.0" prefHeight="81.0" prefWidth="195.0" style="-fx-font-weight: bold;" styleClass="bold" text="Inscripciones" wrapText="true">
                <font>
                   <Font size="27.0" />
                </font>
             </Label>
-            <Button fx:id="addToB" layoutX="28.0" layoutY="205.0" mnemonicParsing="false" onAction="#addToB" prefHeight="54.0" prefWidth="99.0" styleClass="boton" text="Registrar B" textFill="WHITE" textOverrun="CLIP">
+            <Button fx:id="addToB" layoutX="27.0" layoutY="241.0" mnemonicParsing="false" onAction="#addToB" prefHeight="54.0" prefWidth="99.0" styleClass="boton" text="Registrar B" textFill="WHITE" textOverrun="CLIP">
                <font>
                   <Font name="Verdana" size="12.0" />
                </font>
@@ -26,7 +26,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="removeFromB" layoutX="150.0" layoutY="205.0" mnemonicParsing="false" onAction="#removeFromB" prefHeight="54.0" prefWidth="99.0" styleClass="deleteButton" text="Borrar B" textFill="WHITE" textOverrun="CLIP">
+            <Button fx:id="removeFromB" layoutX="149.0" layoutY="241.0" mnemonicParsing="false" onAction="#removeFromB" prefHeight="54.0" prefWidth="99.0" styleClass="deleteButton" text="Borrar B" textFill="WHITE" textOverrun="CLIP">
                <font>
                   <Font name="Verdana" size="12.0" />
                </font>
@@ -34,7 +34,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="addButton2" layoutX="28.0" layoutY="278.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="99.0" styleClass="boton" text="Registrar A" textFill="WHITE" textOverrun="CLIP">
+            <Button fx:id="addToA" layoutX="27.0" layoutY="314.0" mnemonicParsing="false" onAction="#addToA" prefHeight="54.0" prefWidth="99.0" styleClass="boton" text="Registrar A" textFill="WHITE" textOverrun="CLIP">
                <font>
                   <Font name="Verdana" size="12.0" />
                </font>
@@ -42,7 +42,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="addButton11" layoutX="150.0" layoutY="278.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="99.0" styleClass="deleteButton" text="Borrar A" textFill="WHITE" textOverrun="CLIP">
+            <Button fx:id="removeFromA" layoutX="149.0" layoutY="314.0" mnemonicParsing="false" onAction="#removeFromA" prefHeight="54.0" prefWidth="99.0" styleClass="deleteButton" text="Borrar A" textFill="WHITE" textOverrun="CLIP">
                <font>
                   <Font name="Verdana" size="12.0" />
                </font>
@@ -50,7 +50,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="addButton3" layoutX="28.0" layoutY="350.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="99.0" styleClass="boton" text="Registrar A2" textFill="WHITE" textOverrun="CLIP">
+            <Button fx:id="addToA2" layoutX="27.0" layoutY="386.0" mnemonicParsing="false" onAction="#addToA2" prefHeight="54.0" prefWidth="99.0" styleClass="boton" text="Registrar A2" textFill="WHITE" textOverrun="CLIP">
                <font>
                   <Font name="Verdana" size="12.0" />
                </font>
@@ -58,7 +58,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="addButton12" layoutX="150.0" layoutY="350.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="99.0" styleClass="deleteButton" text="Borrar A2" textFill="WHITE" textOverrun="CLIP">
+            <Button fx:id="removeFromA2" layoutX="149.0" layoutY="386.0" mnemonicParsing="false" onAction="#removeFromA2" prefHeight="54.0" prefWidth="99.0" styleClass="deleteButton" text="Borrar A2" textFill="WHITE" textOverrun="CLIP">
                <font>
                   <Font name="Verdana" size="12.0" />
                </font>
@@ -66,7 +66,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="addButton21" layoutX="28.0" layoutY="423.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="99.0" styleClass="boton" text="Registrar A1" textFill="WHITE" textOverrun="CLIP">
+            <Button fx:id="addToA1" layoutX="27.0" layoutY="459.0" mnemonicParsing="false" onAction="#addToA1" prefHeight="54.0" prefWidth="99.0" styleClass="boton" text="Registrar A1" textFill="WHITE" textOverrun="CLIP">
                <font>
                   <Font name="Verdana" size="12.0" />
                </font>
@@ -74,7 +74,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="addButton111" layoutX="150.0" layoutY="423.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="99.0" styleClass="deleteButton" text="Borrar A1" textFill="WHITE" textOverrun="CLIP">
+            <Button fx:id="removeFromA1" layoutX="149.0" layoutY="459.0" mnemonicParsing="false" onAction="#removeFromA1" prefHeight="54.0" prefWidth="99.0" styleClass="deleteButton" text="Borrar A1" textFill="WHITE" textOverrun="CLIP">
                <font>
                   <Font name="Verdana" size="12.0" />
                </font>
@@ -90,9 +90,29 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Label fx:id="errorLabel" layoutX="28.0" layoutY="500.0" text="Ya está inscrito a esta clase" textFill="RED" visible="false">
+            <Label fx:id="errorLabel" layoutX="28.0" layoutY="529.0" text="Ya está inscrito a esta clase" textFill="RED" visible="false">
                <font>
                   <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="28.0" layoutY="87.0" prefHeight="25.0" prefWidth="38.0" style="-fx-font-weight: bold;" styleClass="bold" text="DNI:" wrapText="true">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="28.0" layoutY="124.0" prefHeight="25.0" prefWidth="69.0" style="-fx-font-weight: bold;" styleClass="bold" text="nombre:" wrapText="true">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelNombre" layoutX="100.0" layoutY="124.0" prefHeight="25.0" prefWidth="152.0" style="-fx-font-weight: bold;" styleClass="bold" text="N/A" wrapText="true">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelDni" layoutX="97.0" layoutY="87.0" prefHeight="25.0" prefWidth="152.0" style="-fx-font-weight: bold;" styleClass="bold" text="N/A" wrapText="true">
+               <font>
+                  <Font size="16.0" />
                </font>
             </Label>
          </children>
