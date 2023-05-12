@@ -16,6 +16,7 @@ import java.util.List;
 public class ClaseDAO implements DAO<Clase>{
     private final static String FINDALL ="SELECT * from clases";
     private final static String FINBYID ="SELECT * from clases WHERE id=?";
+    private final static String FINBYNAME ="SELECT * from clases WHERE nombre=?";
     private final static String INSERT ="INSERT INTO clases (nombre,precio) VALUES (?,?)";
     private final static String UPDATE ="UPDATE clases SET nombre=?, precio=? WHERE id=?";
     private final static String DELETE ="DELETE FROM clases WHERE id=?";
@@ -62,7 +63,7 @@ public class ClaseDAO implements DAO<Clase>{
     @Override
     public Clase findById(String nombre) throws SQLException {
         Clase result = null;
-        try(PreparedStatement pst=this.conn.prepareStatement(FINBYID)){
+        try(PreparedStatement pst=this.conn.prepareStatement(FINBYNAME)){
             pst.setString(1, nombre);
             try(ResultSet res = pst.executeQuery()){
                 if(res.next()) {
@@ -110,7 +111,7 @@ public class ClaseDAO implements DAO<Clase>{
         if(entity==null) {
             return result;
         }
-        Clase a = findById(entity.getName());
+        Clase a = findById(entity.getId());
         if(a == null) {
             //INSERT
             try(PreparedStatement pst=this.conn.prepareStatement(INSERT)){

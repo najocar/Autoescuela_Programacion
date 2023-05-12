@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.najocar.autoescuela.controllers.IndexController">
+<AnchorPane onMousePressed="#keyPressed" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.najocar.autoescuela.controllers.IndexController">
    <children>
       <Pane layoutX="800.0" prefHeight="750.0" prefWidth="277.0" style="-fx-background-color: #BABABA;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -29,7 +29,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="removeButton" layoutX="37.0" layoutY="486.0" mnemonicParsing="false" onAction="#removeAlumno" prefHeight="53.0" prefWidth="203.0" styleClass="deleteButton" text="Eliminar Alumno" textFill="WHITE">
+            <Button fx:id="removeButton" layoutX="37.0" layoutY="488.0" mnemonicParsing="false" onAction="#removeAlumno" prefHeight="53.0" prefWidth="203.0" styleClass="deleteButton" text="Eliminar Alumno" textFill="WHITE">
                <font>
                   <Font name="Verdana" size="12.0" />
                </font>
@@ -37,7 +37,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="updateButton" layoutX="37.0" layoutY="567.0" mnemonicParsing="false" onAction="#updateAlumno" prefHeight="53.0" prefWidth="203.0" styleClass="boton" text="Actualizar Alumno" textFill="WHITE">
+            <Button fx:id="updateButton" layoutX="37.0" layoutY="572.0" mnemonicParsing="false" onAction="#updateAlumno" prefHeight="53.0" prefWidth="203.0" styleClass="boton" text="Actualizar Alumno" textFill="WHITE">
                <font>
                   <Font name="Verdana" size="12.0" />
                </font>
@@ -45,7 +45,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="infoAlumno" layoutX="37.0" layoutY="642.0" mnemonicParsing="false" onAction="#changeView" prefHeight="53.0" prefWidth="203.0" styleClass="boton" text="Información Alumno" textFill="WHITE">
+            <Button fx:id="infoAlumno" layoutX="37.0" layoutY="655.0" mnemonicParsing="false" onAction="#changeView" prefHeight="53.0" prefWidth="203.0" styleClass="boton" text="Información Alumno" textFill="WHITE">
                <font>
                   <Font name="Verdana" size="12.0" />
                </font>
@@ -67,11 +67,19 @@
             <Font size="36.0" />
          </font>
       </Label>
-      <TableView fx:id="tabla" fixedCellSize="30.0" layoutX="71.0" layoutY="183.0" prefHeight="480.0" prefWidth="568.0">
+      <TableView fx:id="tabla" fixedCellSize="30.0" layoutX="71.0" layoutY="183.0" prefHeight="441.0" prefWidth="568.0">
         <columns>
           <TableColumn fx:id="colDni" prefWidth="284.0" text="DNI" />
           <TableColumn fx:id="colNombre" minWidth="2.0" prefWidth="284.0" text="Nombre" />
         </columns>
       </TableView>
+      <Button fx:id="infoAlumno1" layoutX="435.0" layoutY="658.0" mnemonicParsing="false" onAction="#changeViewToClases" prefHeight="53.0" prefWidth="203.0" styleClass="boton" text="Cambiar precio de Clases" textFill="WHITE">
+         <font>
+            <Font name="Verdana" size="12.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>

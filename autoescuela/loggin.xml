@@ -2,15 +2,15 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2023-05-10T08:03:04.892270600Z</date>
-  <millis>1683705784892</millis>
-  <nanos>270600</nanos>
+  <date>2023-05-12T07:04:36.372570500Z</date>
+  <millis>1683875076372</millis>
+  <nanos>570500</nanos>
   <sequence>0</sequence>
   <logger>com.najocar.autoescuela.utils.Logger</logger>
   <level>INFO</level>
   <class>com.najocar.autoescuela.utils.Logger</class>
   <method>info</method>
   <thread>28</thread>
-  <message>Alumno actualizado: Persona{dni='435', name='sfasfasfewfsd'}</message>
+  <message>Alumno actualizado: Persona{dni='34925823R', name='Rodrigo'}</message>
 </record>
 </log>

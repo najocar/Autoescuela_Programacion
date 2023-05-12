@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -132,21 +133,31 @@ public class IndexController {
         App.setRoot("alumnInfo");
     }
 
+    public void changeViewToClases() throws IOException {
+        App.setRoot("precioClases");
+    }
+
     @FXML
     public void insertAlumno(ActionEvent event) throws SQLException {
         Alumno alumno = new Alumno();
         if(!dniField.getText().isEmpty() && !nombreField.getText().isEmpty()) {
             if(validateDNI(dniField.getText())){
-                alumno.setDni(dniField.getText().toUpperCase());
-                alumno.setName(nombreField.getText());
-                if (adao.findById(alumno.getDni()) == null){
-                    alumnos.add(alumno);
-                    adao.save(alumno);
-                    Logger.info("Alumno registrado: " + alumno.toString());
-                    clearFields();
-                }else {
-                    labelDni.setText("El DNI ya a sido registrado");
-                    labelDni.setTextFill(Color.RED);
+                if (nombreField.getText().length() > 50){
+                    labelNombre.setText("El nombre es demasiado largo");
+                    labelNombre.setTextFill(Color.RED);
+                }else{
+                    alumno.setDni(dniField.getText().toUpperCase());
+                    alumno.setName(nombreField.getText());
+                    if (adao.findById(alumno.getDni()) == null){
+                        alumnos.add(alumno);
+                        adao.save(alumno);
+                        Logger.info("Alumno registrado: " + alumno.toString());
+                        clearFields();
+                    }else {
+                        labelDni.setText("El DNI ya a sido registrado");
+                        labelDni.setTextFill(Color.RED);
+                    }
+
                 }
             }else {
                 labelDni.setText("DNI no válido");
@@ -157,15 +168,19 @@ public class IndexController {
 
     @FXML
     public void updateAlumno(ActionEvent event) throws SQLException {
-        Alumno alumno = new Alumno();
-        alumno.setDni(dniField.getText());
-        alumno.setName(nombreField.getText());
-        adao.save(alumno);
-        Logger.info("Alumno actualizado: " + alumno.toString());
-        alumnos.set(positionInTable, alumno);
-        tabla.getSelectionModel().clearSelection();
-        clearFields();
-
+        if (nombreField.getText().length() > 50){
+            labelNombre.setText("El nombre es demasiado largo");
+            labelNombre.setTextFill(Color.RED);
+        }else{
+            Alumno alumno = new Alumno();
+            alumno.setDni(dniField.getText());
+            alumno.setName(nombreField.getText());
+            adao.save(alumno);
+            Logger.info("Alumno actualizado: " + alumno.toString());
+            alumnos.set(positionInTable, alumno);
+            tabla.getSelectionModel().clearSelection();
+            clearFields();
+        }
     }
 
 
@@ -179,7 +194,11 @@ public class IndexController {
         clearFields();
 
     }
-
+    @FXML
+    public void keyPressed() {
+        this.tabla.getSelectionModel().clearSelection();
+        clearFields();
+    }
     private final ListChangeListener<Alumno> selectAlumno =
             new ListChangeListener<Alumno>() {
                 @Override
@@ -203,6 +222,7 @@ public class IndexController {
         final Alumno alumno = getAlumnoSelected();
         positionInTable = alumnos.indexOf(alumno);
         labelDni.setTextFill(Color.BLACK);
+        labelNombre.setTextFill(Color.BLACK);
 
         if (alumno != null) {
             dniField.setText(alumno.getDni());
@@ -228,6 +248,7 @@ public class IndexController {
         labelDni.setText("Introduce un DNI");
         labelNombre.setText("Introduce un Nombre");
         labelDni.setTextFill(Color.BLACK);
+        labelNombre.setTextFill(Color.BLACK);
     }
 
     public static boolean validateDNI(String dni) {
