@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.sql.SQLException;
 
-public class PrecioClasesController {
+public class PrecioClasesController extends Controller {
     @FXML
     private Pane navbar;
     @FXML
@@ -55,20 +55,6 @@ public class PrecioClasesController {
     private double yOffset = 0;
 
     ClaseDAO cdao = new ClaseDAO();
-
-    @FXML
-    private void closeWindow(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
-    }
-
-    @FXML
-    private void minimizeWindow(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.setIconified(true);
-    }
 
     @FXML
     public void returnMain() throws IOException {

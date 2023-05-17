@@ -81,5 +81,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      <Label layoutX="476.0" layoutY="129.0" text="Buscar por DNI" />
+      <TextField fx:id="fieldBuscar" layoutX="476.0" layoutY="148.0" onKeyTyped="#buscar" prefHeight="25.0" prefWidth="163.0" promptText="introduce un DNI" />
    </children>
 </AnchorPane>

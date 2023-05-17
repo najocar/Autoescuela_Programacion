@@ -14,5 +14,7 @@ module com.najocar.autoescuela {
     opens com.najocar.autoescuela.model.domain to javafx.base;
     exports com.najocar.autoescuela.utils;
     opens com.najocar.autoescuela.utils to javafx.fxml;
+    exports com.najocar.autoescuela.model.dao;
+    exports com.najocar.autoescuela.model.domain;
 
 }

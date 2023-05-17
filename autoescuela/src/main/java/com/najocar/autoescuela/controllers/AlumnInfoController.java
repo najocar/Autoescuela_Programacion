@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class AlumnInfoController {
+public class AlumnInfoController extends Controller {
     @FXML
     private Pane navbar;
     @FXML
@@ -55,20 +55,6 @@ public class AlumnInfoController {
 
     private double xOffset = 0;
     private double yOffset = 0;
-
-    @FXML
-    private void closeWindow(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
-    }
-
-    @FXML
-    private void minimizeWindow(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.setIconified(true);
-    }
 
     @FXML
     public void returnMain() throws IOException {

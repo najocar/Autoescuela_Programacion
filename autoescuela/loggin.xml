@@ -2,10 +2,22 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2023-05-12T07:04:36.372570500Z</date>
-  <millis>1683875076372</millis>
-  <nanos>570500</nanos>
+  <date>2023-05-16T07:50:13.713393100Z</date>
+  <millis>1684223413713</millis>
+  <nanos>393100</nanos>
   <sequence>0</sequence>
+  <logger>com.najocar.autoescuela.utils.Logger</logger>
+  <level>INFO</level>
+  <class>com.najocar.autoescuela.utils.Logger</class>
+  <method>info</method>
+  <thread>28</thread>
+  <message>Alumno actualizado: Persona{dni='34925823R', name='Rodrigo editado'}</message>
+</record>
+<record>
+  <date>2023-05-16T07:50:22.744961200Z</date>
+  <millis>1684223422744</millis>
+  <nanos>961200</nanos>
+  <sequence>1</sequence>
   <logger>com.najocar.autoescuela.utils.Logger</logger>
   <level>INFO</level>
   <class>com.najocar.autoescuela.utils.Logger</class>
