@@ -155,7 +155,7 @@ public class ClaseDAO implements DAO<Clase>{
         try(PreparedStatement pst=this.conn.prepareStatement(DELETE)){
             pst.setInt(1, entity.getId());
             pst.executeUpdate();
-
+            result = entity;
         }
         return result;
     }

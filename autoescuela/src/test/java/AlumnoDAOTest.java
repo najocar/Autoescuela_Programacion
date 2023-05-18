@@ -31,34 +31,13 @@ class AlumnoDAOTest {
     @Test
     @DisplayName("encuentra un alumno por dni")
     void findByDni() throws SQLException {
-        assertEquals(alumno1, alumnoDAO.delete(alumno1));
+        assertEquals(alumno1, alumnoDAO.findById(alumno1.getDni()));
     }
 
     @Test
     @DisplayName("Borra un alumno")
-    void delete() throws SQLException {
+    void deletea() throws SQLException {
         assertEquals(alumno1, alumnoDAO.delete(alumno1));
     }
 
-    /*
-    @Test
-    @DisplayName("Divisiones positivos y negativos")
-    void testDivisionesPositivosYNegativos() throws Exception {
-        assertTrue(miCalculadora.divide(4,2) > 0);
-        assertTrue(miCalculadora.divide(4,-2)< 0);
-        assertTrue(miCalculadora.divide(-4,2) < 0);
-        assertTrue(miCalculadora.divide(-4,-2) > 0);
-    }
-
-    @Test
-    @DisplayName("División por cero causa excepción")
-    void testDivisionPorCero() {
-        Exception thrown = assertThrows(Exception.class, () -> {
-            miCalculadora.divide(5,0);
-        });
-
-        assertEquals("El divisor es 0", thrown.getMessage());
-    }
-
-     */
 }
