@@ -18,7 +18,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 public class PrecioClasesController extends Controller {
     @FXML
@@ -61,7 +63,7 @@ public class PrecioClasesController extends Controller {
         App.setRoot("index");
     }
 
-    public void initialize() throws SQLException {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
 
         navbar.setOnMousePressed(event -> {
             xOffset = event.getSceneX();
@@ -74,7 +76,11 @@ public class PrecioClasesController extends Controller {
             stage.setY(event.getScreenY() - yOffset);
         });
 
-        setOldPrice();
+        try {
+            setOldPrice();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void saveChanges() throws SQLException {
