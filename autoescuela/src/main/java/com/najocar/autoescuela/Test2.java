@@ -5,6 +5,7 @@ import com.najocar.autoescuela.model.dao.ClaseDAO;
 import com.najocar.autoescuela.model.domain.Alumno;
 import com.najocar.autoescuela.model.domain.Clase;
 import com.najocar.autoescuela.utils.Logger;
+import javafx.scene.paint.Color;
 
 import java.sql.SQLException;
 
@@ -35,9 +36,14 @@ public class Test2 {
 
         //System.out.println(cdao.findById(1));
         //System.out.println(adao.findById("12345p"));
-        System.out.println(adao.alumnoAllClases("12345p").size());
+        //System.out.println(adao.alumnoAllClases("12345p").size());
         //adao.save(a);
-        Logger.logger.info("hola");
+        //Logger.logger.info("hola");
 
+        try {
+            int value = Integer.parseInt("");
+        } catch (NumberFormatException e) {
+            System.out.println(e);
+        }
     }
 }

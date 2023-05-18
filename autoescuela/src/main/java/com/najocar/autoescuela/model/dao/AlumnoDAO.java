@@ -149,6 +149,7 @@ public class AlumnoDAO implements DAO<Alumno> {
         try (PreparedStatement pst = this.conn.prepareStatement(DELETE)) {
             pst.setString(1, entity.getDni());
             pst.executeUpdate();
+            result = entity;
         }
 
         return result;

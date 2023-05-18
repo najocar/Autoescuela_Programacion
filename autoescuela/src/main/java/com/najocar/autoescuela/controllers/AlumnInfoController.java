@@ -20,10 +20,12 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class AlumnInfoController {
+public class AlumnInfoController extends Controller {
     @FXML
     private Pane navbar;
     @FXML
@@ -57,25 +59,11 @@ public class AlumnInfoController {
     private double yOffset = 0;
 
     @FXML
-    private void closeWindow(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
-    }
-
-    @FXML
-    private void minimizeWindow(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.setIconified(true);
-    }
-
-    @FXML
     public void returnMain() throws IOException {
         App.setRoot("index");
     }
 
-    public void initialize() throws SQLException {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
 
         navbar.setOnMousePressed(event -> {
             xOffset = event.getSceneX();
@@ -89,13 +77,21 @@ public class AlumnInfoController {
         });
 
         labelDni.setText(controlDni.getDni());
-        labelNombre.setText(adao.findById(controlDni.getDni()).getName());
+        try {
+            labelNombre.setText(adao.findById(controlDni.getDni()).getName());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         clases = FXCollections.observableArrayList();
         this.colClase.setCellValueFactory(new PropertyValueFactory("name"));
         this.colPrecio.setCellValueFactory(new PropertyValueFactory("price"));
 
-        generateTable();
+        try {
+            generateTable();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 

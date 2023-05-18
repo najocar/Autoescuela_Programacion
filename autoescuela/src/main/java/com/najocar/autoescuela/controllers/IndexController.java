@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -21,10 +22,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class IndexController {
+public class IndexController extends Controller{
     @FXML
     private TableView<Alumno> tabla;
     @FXML
@@ -52,6 +54,8 @@ public class IndexController {
     private Label labelDni;
     @FXML
     private Label labelNombre;
+    @FXML
+    private TextField fieldBuscar;
 
 
     private ObservableList<Alumno> alumnos;
@@ -70,7 +74,7 @@ public class IndexController {
      * Se inicia al comienzo de la aplicación
      * @throws SQLException
      */
-    public void initialize() throws SQLException {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
 
         removeButton.setDisable(true);
         updateButton.setDisable(true);
@@ -97,56 +101,61 @@ public class IndexController {
         tablaAlumnos.addListener(selectAlumno);
     }
 
-    /**
-     * Close window
-     * @param event
-     */
     @FXML
-    private void closeWindow(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
-    }
-
-    /**
-     * minimize window
-     * @param event
-     */
-    @FXML
-    private void minimizeWindow(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.setIconified(true);
-    }
-
-    @FXML
-    public void generateTable() throws SQLException {
-        List<Alumno> aux = adao.findAll();
+    public void generateTable() {
+        List<Alumno> aux = null;
+        try {
+            aux = adao.findAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         alumnos.setAll(aux);
 
         this.tabla.setItems(alumnos);
     }
 
-    public void changeView() throws IOException {
+    public void changeView() {
         controlDni.setDni(alumnos.get(positionInTable).getDni());
-        App.setRoot("alumnInfo");
+        try {
+            App.setRoot("alumnInfo");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void changeViewToClases() {
+        try {
+            App.setRoot("precioClases");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
-    public void insertAlumno(ActionEvent event) throws SQLException {
+    public void insertAlumno(ActionEvent event){
         Alumno alumno = new Alumno();
         if(!dniField.getText().isEmpty() && !nombreField.getText().isEmpty()) {
             if(validateDNI(dniField.getText())){
-                alumno.setDni(dniField.getText().toUpperCase());
-                alumno.setName(nombreField.getText());
-                if (adao.findById(alumno.getDni()) == null){
-                    alumnos.add(alumno);
-                    adao.save(alumno);
-                    Logger.info("Alumno registrado: " + alumno.toString());
-                    clearFields();
-                }else {
-                    labelDni.setText("El DNI ya a sido registrado");
-                    labelDni.setTextFill(Color.RED);
+                if (nombreField.getText().length() > 50){
+                    labelNombre.setText("El nombre es demasiado largo");
+                    labelNombre.setTextFill(Color.RED);
+                }else{
+                    alumno.setDni(dniField.getText().toUpperCase());
+                    alumno.setName(nombreField.getText());
+                    try {
+                        if (adao.findById(alumno.getDni()) == null){
+                            alumnos.add(alumno);
+                            adao.save(alumno);
+                            Logger.info("Alumno registrado: " + alumno.toString());
+                            clearFields();
+                        }else {
+                            labelDni.setText("El DNI ya a sido registrado");
+                            labelDni.setTextFill(Color.RED);
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
                 }
             }else {
                 labelDni.setText("DNI no válido");
@@ -156,30 +165,78 @@ public class IndexController {
     }
 
     @FXML
-    public void updateAlumno(ActionEvent event) throws SQLException {
-        Alumno alumno = new Alumno();
-        alumno.setDni(dniField.getText());
-        alumno.setName(nombreField.getText());
-        adao.save(alumno);
-        Logger.info("Alumno actualizado: " + alumno.toString());
-        alumnos.set(positionInTable, alumno);
-        tabla.getSelectionModel().clearSelection();
-        clearFields();
-
+    public void updateAlumno(ActionEvent event) {
+        if (nombreField.getText().length() > 50){
+            labelNombre.setText("El nombre es demasiado largo");
+            labelNombre.setTextFill(Color.RED);
+        }else{
+            Alumno alumno = new Alumno();
+            alumno.setDni(dniField.getText());
+            alumno.setName(nombreField.getText());
+            try {
+                adao.save(alumno);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            Logger.info("Alumno actualizado: " + alumno.toString());
+            alumnos.set(positionInTable, alumno);
+            tabla.getSelectionModel().clearSelection();
+            clearFields();
+        }
     }
 
 
     @FXML
-    public void removeAlumno(ActionEvent event) throws SQLException {
+    public void removeAlumno(ActionEvent event) {
 
-        adao.delete(adao.findById(alumnos.get(positionInTable).getDni()));
+        try {
+            adao.delete(adao.findById(alumnos.get(positionInTable).getDni()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         Logger.info("Alumno eliminado: " + alumnos.get(positionInTable).toString());
         alumnos.remove(alumnos.get(positionInTable));
         tabla.getSelectionModel().clearSelection();
         clearFields();
 
     }
+    @FXML
+    public void keyPressed() {
+        this.tabla.getSelectionModel().clearSelection();
+        clearFields();
+    }
 
+    @FXML
+    public void buscar () throws SQLException {
+        if (fieldBuscar.getText().isEmpty()) {
+            generateTable();
+        } else {
+            ObservableList<Alumno> aux = FXCollections.observableArrayList();
+            aux.setAll(alumnos);
+
+            for (Alumno alumno : alumnos) {
+                for (int i = 0; i < fieldBuscar.getText().length(); i++) {
+                    if (alumno.getDni().charAt(i) != fieldBuscar.getText().charAt(i)) {
+                        if (aux.contains(alumno)){
+                            aux.remove(alumno);
+                        }
+                    }
+                    /*else{
+                        //System.out.println("no coincide");
+                        //System.out.println(alumnos.contains(alumno));
+                        if (alumnos.contains(alumno) == false){
+                            System.out.println("no tiene alumno");
+                            alumnos.add(alumno);
+                        }
+                    }
+
+                     */
+                }
+            }
+
+            this.tabla.setItems(aux);
+        }
+    }
     private final ListChangeListener<Alumno> selectAlumno =
             new ListChangeListener<Alumno>() {
                 @Override
@@ -203,6 +260,7 @@ public class IndexController {
         final Alumno alumno = getAlumnoSelected();
         positionInTable = alumnos.indexOf(alumno);
         labelDni.setTextFill(Color.BLACK);
+        labelNombre.setTextFill(Color.BLACK);
 
         if (alumno != null) {
             dniField.setText(alumno.getDni());
@@ -228,6 +286,7 @@ public class IndexController {
         labelDni.setText("Introduce un DNI");
         labelNombre.setText("Introduce un Nombre");
         labelDni.setTextFill(Color.BLACK);
+        labelNombre.setTextFill(Color.BLACK);
     }
 
     public static boolean validateDNI(String dni) {
