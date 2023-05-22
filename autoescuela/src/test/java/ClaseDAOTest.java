@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ClaseDAOTest {
-
+    
     // Definimos el objeto para usarlo en todos los tests
     static ClaseDAO claseDAO;
 
@@ -31,7 +31,6 @@ class ClaseDAOTest {
     @DisplayName("Borra una clase")
     void deletea() throws SQLException {
         clase1 = claseDAO.findById("prueba");
-        System.out.println(clase1);
         assertEquals(clase1, claseDAO.delete(clase1));
     }
 

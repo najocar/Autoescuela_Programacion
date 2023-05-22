@@ -1,0 +1,7 @@
+module:com.najocar.autoescuela
+com.najocar.autoescuela
+com.najocar.autoescuela.controllers
+com.najocar.autoescuela.model.connections
+com.najocar.autoescuela.model.dao
+com.najocar.autoescuela.model.domain
+com.najocar.autoescuela.utils

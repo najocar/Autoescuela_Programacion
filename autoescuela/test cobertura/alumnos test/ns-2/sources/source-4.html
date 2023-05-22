@@ -1,0 +1,440 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > IndexController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.najocar.autoescuela.controllers</a>
+</div>
+
+<h1>Coverage Summary for Class: IndexController (com.najocar.autoescuela.controllers)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">IndexController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/135)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">IndexController$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/137)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.najocar.autoescuela.controllers;
+&nbsp;
+&nbsp;import com.najocar.autoescuela.App;
+&nbsp;import com.najocar.autoescuela.model.dao.AlumnoDAO;
+&nbsp;import com.najocar.autoescuela.model.domain.Alumno;
+&nbsp;import com.najocar.autoescuela.utils.Logger;
+&nbsp;import javafx.application.Application;
+&nbsp;import javafx.collections.FXCollections;
+&nbsp;import javafx.collections.ListChangeListener;
+&nbsp;import javafx.collections.ObservableList;
+&nbsp;import javafx.event.ActionEvent;
+&nbsp;import javafx.fxml.FXML;
+&nbsp;import javafx.scene.Node;
+&nbsp;import javafx.scene.Scene;
+&nbsp;import javafx.scene.control.*;
+&nbsp;import javafx.scene.control.cell.PropertyValueFactory;
+&nbsp;import javafx.scene.input.KeyEvent;
+&nbsp;import javafx.scene.layout.Pane;
+&nbsp;import javafx.scene.paint.Color;
+&nbsp;import javafx.stage.Stage;
+&nbsp;
+&nbsp;import java.io.IOException;
+&nbsp;import java.net.URL;
+&nbsp;import java.sql.SQLException;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;import java.util.ResourceBundle;
+&nbsp;
+<b class="nc">&nbsp;public class IndexController extends Controller{</b>
+&nbsp;    @FXML
+&nbsp;    private TableView&lt;Alumno&gt; tabla;
+&nbsp;    @FXML
+&nbsp;    private TableColumn colDni;
+&nbsp;    @FXML
+&nbsp;    private TableColumn colNombre;
+&nbsp;    @FXML
+&nbsp;    private Pane navbar;
+&nbsp;    @FXML
+&nbsp;    private Button closeButton;
+&nbsp;    @FXML
+&nbsp;    private Button addButton;
+&nbsp;    @FXML
+&nbsp;    private Button removeButton;
+&nbsp;    @FXML
+&nbsp;    private Button updateButton;
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    private Button infoAlumno;
+&nbsp;    @FXML
+&nbsp;    private TextField dniField;
+&nbsp;    @FXML
+&nbsp;    private TextField nombreField;
+&nbsp;    @FXML
+&nbsp;    private Label labelDni;
+&nbsp;    @FXML
+&nbsp;    private Label labelNombre;
+&nbsp;    @FXML
+&nbsp;    private TextField fieldBuscar;
+&nbsp;
+&nbsp;
+&nbsp;    private ObservableList&lt;Alumno&gt; alumnos;
+&nbsp;
+&nbsp;    private int positionInTable;
+&nbsp;
+<b class="nc">&nbsp;    private AlumnoDAO adao = new AlumnoDAO();</b>
+&nbsp;
+<b class="nc">&nbsp;    ControlDni controlDni = ControlDni.getInstance();</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;    private double xOffset = 0;</b>
+<b class="nc">&nbsp;    private double yOffset = 0;</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Se inicia al comienzo de la aplicación
+&nbsp;     * @throws SQLException
+&nbsp;     */
+&nbsp;    public void initialize(URL url, ResourceBundle resourceBundle) {
+&nbsp;
+<b class="nc">&nbsp;        removeButton.setDisable(true);</b>
+<b class="nc">&nbsp;        updateButton.setDisable(true);</b>
+<b class="nc">&nbsp;        infoAlumno.setDisable(true);</b>
+&nbsp;
+<b class="nc">&nbsp;        navbar.setOnMousePressed(event -&gt; {</b>
+<b class="nc">&nbsp;            xOffset = event.getSceneX();</b>
+<b class="nc">&nbsp;            yOffset = event.getSceneY();</b>
+&nbsp;        });
+&nbsp;
+<b class="nc">&nbsp;        navbar.setOnMouseDragged(event -&gt; {</b>
+<b class="nc">&nbsp;            Stage stage = (Stage) navbar.getScene().getWindow();</b>
+<b class="nc">&nbsp;            stage.setX(event.getScreenX() - xOffset);</b>
+<b class="nc">&nbsp;            stage.setY(event.getScreenY() - yOffset);</b>
+&nbsp;        });
+&nbsp;
+<b class="nc">&nbsp;        alumnos = FXCollections.observableArrayList();</b>
+<b class="nc">&nbsp;        this.colDni.setCellValueFactory(new PropertyValueFactory(&quot;dni&quot;));</b>
+<b class="nc">&nbsp;        this.colNombre.setCellValueFactory(new PropertyValueFactory(&quot;name&quot;));</b>
+&nbsp;
+<b class="nc">&nbsp;        generateTable();</b>
+&nbsp;
+<b class="nc">&nbsp;        final ObservableList&lt;Alumno&gt; tablaAlumnos = tabla.getSelectionModel().getSelectedItems();</b>
+<b class="nc">&nbsp;        tablaAlumnos.addListener(selectAlumno);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    public void generateTable() {
+<b class="nc">&nbsp;        List&lt;Alumno&gt; aux = null;</b>
+&nbsp;        try {
+<b class="nc">&nbsp;            aux = adao.findAll();</b>
+<b class="nc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        alumnos.setAll(aux);</b>
+&nbsp;
+<b class="nc">&nbsp;        this.tabla.setItems(alumnos);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void changeView() {
+<b class="nc">&nbsp;        controlDni.setDni(alumnos.get(positionInTable).getDni());</b>
+&nbsp;        try {
+<b class="nc">&nbsp;            App.setRoot(&quot;alumnInfo&quot;);</b>
+<b class="nc">&nbsp;        } catch (IOException e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void changeViewToClases() {
+&nbsp;        try {
+<b class="nc">&nbsp;            App.setRoot(&quot;precioClases&quot;);</b>
+<b class="nc">&nbsp;        } catch (IOException e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    public void insertAlumno(ActionEvent event){
+<b class="nc">&nbsp;        Alumno alumno = new Alumno();</b>
+<b class="nc">&nbsp;        if(!dniField.getText().isEmpty() &amp;&amp; !nombreField.getText().isEmpty()) {</b>
+<b class="nc">&nbsp;            if(validateDNI(dniField.getText())){</b>
+<b class="nc">&nbsp;                if (nombreField.getText().length() &gt; 50){</b>
+<b class="nc">&nbsp;                    labelNombre.setText(&quot;El nombre es demasiado largo&quot;);</b>
+<b class="nc">&nbsp;                    labelNombre.setTextFill(Color.RED);</b>
+&nbsp;                }else{
+<b class="nc">&nbsp;                    alumno.setDni(dniField.getText().toUpperCase());</b>
+<b class="nc">&nbsp;                    alumno.setName(nombreField.getText());</b>
+&nbsp;                    try {
+<b class="nc">&nbsp;                        if (adao.findById(alumno.getDni()) == null){</b>
+<b class="nc">&nbsp;                            alumnos.add(alumno);</b>
+<b class="nc">&nbsp;                            adao.save(alumno);</b>
+<b class="nc">&nbsp;                            Logger.info(&quot;Alumno registrado: &quot; + alumno.toString());</b>
+<b class="nc">&nbsp;                            clearFields();</b>
+&nbsp;                        }else {
+<b class="nc">&nbsp;                            labelDni.setText(&quot;El DNI ya a sido registrado&quot;);</b>
+<b class="nc">&nbsp;                            labelDni.setTextFill(Color.RED);</b>
+&nbsp;                        }
+<b class="nc">&nbsp;                    } catch (SQLException e) {</b>
+<b class="nc">&nbsp;                        e.printStackTrace();</b>
+<b class="nc">&nbsp;                    }</b>
+&nbsp;
+&nbsp;                }
+&nbsp;            }else {
+<b class="nc">&nbsp;                labelDni.setText(&quot;DNI no válido&quot;);</b>
+<b class="nc">&nbsp;                labelDni.setTextFill(Color.RED);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    public void updateAlumno(ActionEvent event) {
+<b class="nc">&nbsp;        if (nombreField.getText().length() &gt; 50){</b>
+<b class="nc">&nbsp;            labelNombre.setText(&quot;El nombre es demasiado largo&quot;);</b>
+<b class="nc">&nbsp;            labelNombre.setTextFill(Color.RED);</b>
+&nbsp;        }else{
+<b class="nc">&nbsp;            Alumno alumno = new Alumno();</b>
+<b class="nc">&nbsp;            alumno.setDni(dniField.getText());</b>
+<b class="nc">&nbsp;            alumno.setName(nombreField.getText());</b>
+&nbsp;            try {
+<b class="nc">&nbsp;                adao.save(alumno);</b>
+<b class="nc">&nbsp;            } catch (SQLException e) {</b>
+<b class="nc">&nbsp;                e.printStackTrace();</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;            Logger.info(&quot;Alumno actualizado: &quot; + alumno.toString());</b>
+<b class="nc">&nbsp;            alumnos.set(positionInTable, alumno);</b>
+<b class="nc">&nbsp;            tabla.getSelectionModel().clearSelection();</b>
+<b class="nc">&nbsp;            clearFields();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    public void removeAlumno(ActionEvent event) {
+&nbsp;
+&nbsp;        try {
+<b class="nc">&nbsp;            adao.delete(adao.findById(alumnos.get(positionInTable).getDni()));</b>
+<b class="nc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        Logger.info(&quot;Alumno eliminado: &quot; + alumnos.get(positionInTable).toString());</b>
+<b class="nc">&nbsp;        alumnos.remove(alumnos.get(positionInTable));</b>
+<b class="nc">&nbsp;        tabla.getSelectionModel().clearSelection();</b>
+<b class="nc">&nbsp;        clearFields();</b>
+&nbsp;
+&nbsp;    }
+&nbsp;    @FXML
+&nbsp;    public void keyPressed() {
+<b class="nc">&nbsp;        this.tabla.getSelectionModel().clearSelection();</b>
+<b class="nc">&nbsp;        clearFields();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    public void buscar () throws SQLException {
+<b class="nc">&nbsp;        if (fieldBuscar.getText().isEmpty()) {</b>
+<b class="nc">&nbsp;            generateTable();</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            ObservableList&lt;Alumno&gt; aux = FXCollections.observableArrayList();</b>
+<b class="nc">&nbsp;            aux.setAll(alumnos);</b>
+&nbsp;
+<b class="nc">&nbsp;            for (Alumno alumno : alumnos) {</b>
+<b class="nc">&nbsp;                for (int i = 0; i &lt; fieldBuscar.getText().length(); i++) {</b>
+<b class="nc">&nbsp;                    if (alumno.getDni().charAt(i) != fieldBuscar.getText().charAt(i)) {</b>
+<b class="nc">&nbsp;                        if (aux.contains(alumno)){</b>
+<b class="nc">&nbsp;                            aux.remove(alumno);</b>
+&nbsp;                        }
+&nbsp;                    }
+&nbsp;                    /*else{
+&nbsp;                        //System.out.println(&quot;no coincide&quot;);
+&nbsp;                        //System.out.println(alumnos.contains(alumno));
+&nbsp;                        if (alumnos.contains(alumno) == false){
+&nbsp;                            System.out.println(&quot;no tiene alumno&quot;);
+&nbsp;                            alumnos.add(alumno);
+&nbsp;                        }
+&nbsp;                    }
+&nbsp;
+&nbsp;                     */
+&nbsp;                }
+<b class="nc">&nbsp;            }</b>
+&nbsp;
+<b class="nc">&nbsp;            this.tabla.setItems(aux);</b>
+&nbsp;        }
+&nbsp;    }
+<b class="nc">&nbsp;    private final ListChangeListener&lt;Alumno&gt; selectAlumno =</b>
+<b class="nc">&nbsp;            new ListChangeListener&lt;Alumno&gt;() {</b>
+&nbsp;                @Override
+&nbsp;                public void onChanged(ListChangeListener.Change&lt;? extends Alumno&gt; c) {
+<b class="nc">&nbsp;                    takeAlumnoSelected();</b>
+&nbsp;                }
+&nbsp;            };
+&nbsp;
+&nbsp;    public Alumno getAlumnoSelected() {
+<b class="nc">&nbsp;        if (tabla != null) {</b>
+<b class="nc">&nbsp;            List&lt;Alumno&gt; selected = tabla.getSelectionModel().getSelectedItems();</b>
+<b class="nc">&nbsp;            if (selected.size() == 1) {</b>
+<b class="nc">&nbsp;                final Alumno alumnoSelected = selected.get(0);</b>
+<b class="nc">&nbsp;                return alumnoSelected;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        return null;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void takeAlumnoSelected() {
+<b class="nc">&nbsp;        final Alumno alumno = getAlumnoSelected();</b>
+<b class="nc">&nbsp;        positionInTable = alumnos.indexOf(alumno);</b>
+<b class="nc">&nbsp;        labelDni.setTextFill(Color.BLACK);</b>
+<b class="nc">&nbsp;        labelNombre.setTextFill(Color.BLACK);</b>
+&nbsp;
+<b class="nc">&nbsp;        if (alumno != null) {</b>
+<b class="nc">&nbsp;            dniField.setText(alumno.getDni());</b>
+<b class="nc">&nbsp;            nombreField.setText(alumno.getName());</b>
+<b class="nc">&nbsp;            removeButton.setDisable(false);</b>
+<b class="nc">&nbsp;            updateButton.setDisable(false);</b>
+<b class="nc">&nbsp;            infoAlumno.setDisable(false);</b>
+<b class="nc">&nbsp;            addButton.setDisable(true);</b>
+<b class="nc">&nbsp;            dniField.setDisable(true);</b>
+<b class="nc">&nbsp;            labelDni.setText(&quot;Dni&quot;);</b>
+<b class="nc">&nbsp;            labelNombre.setText(&quot;Introduce un nuevo nombre&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public void clearFields() {
+<b class="nc">&nbsp;        dniField.clear();</b>
+<b class="nc">&nbsp;        nombreField.clear();</b>
+<b class="nc">&nbsp;        removeButton.setDisable(true);</b>
+<b class="nc">&nbsp;        updateButton.setDisable(true);</b>
+<b class="nc">&nbsp;        infoAlumno.setDisable(true);</b>
+<b class="nc">&nbsp;        addButton.setDisable(false);</b>
+<b class="nc">&nbsp;        dniField.setDisable(false);</b>
+<b class="nc">&nbsp;        labelDni.setText(&quot;Introduce un DNI&quot;);</b>
+<b class="nc">&nbsp;        labelNombre.setText(&quot;Introduce un Nombre&quot;);</b>
+<b class="nc">&nbsp;        labelDni.setTextFill(Color.BLACK);</b>
+<b class="nc">&nbsp;        labelNombre.setTextFill(Color.BLACK);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static boolean validateDNI(String dni) {
+<b class="nc">&nbsp;        String letras = &quot;TRWAGMYFPDXBNJZSQVHLCKE&quot;;</b>
+<b class="nc">&nbsp;        boolean valido = true;</b>
+&nbsp;
+<b class="nc">&nbsp;        if (dni.length() != 9) {</b>
+<b class="nc">&nbsp;            valido = false;</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            char letra = dni.charAt(8);</b>
+<b class="nc">&nbsp;            int num = Integer.parseInt(dni.substring(0, 8));</b>
+<b class="nc">&nbsp;            int resto = num % 23;</b>
+<b class="nc">&nbsp;            char letraCalculada = letras.charAt(resto);</b>
+<b class="nc">&nbsp;            if (Character.toUpperCase(letra) != letraCalculada) {</b>
+<b class="nc">&nbsp;                valido = false;</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return valido;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-19 11:09</div>
+</div>
+</body>
+</html>

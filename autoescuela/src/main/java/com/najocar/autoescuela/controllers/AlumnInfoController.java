@@ -63,6 +63,7 @@ public class AlumnInfoController extends Controller {
         App.setRoot("index");
     }
 
+    @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         navbar.setOnMousePressed(event -> {
