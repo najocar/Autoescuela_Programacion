@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.najocar.autoescuela.controllers.PrecioClasesController">
+    <children>
+      <GridPane layoutX="43.0" layoutY="285.0" prefHeight="200.0" prefWidth="957.0" AnchorPane.leftAnchor="43.0" AnchorPane.rightAnchor="43.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label alignment="CENTER" prefHeight="81.0" prefWidth="195.0" style="-fx-font-weight: bold;" styleClass="bold" text="B" wrapText="true" GridPane.columnIndex="1">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="81.0" prefWidth="195.0" style="-fx-font-weight: bold;" styleClass="bold" text="A" wrapText="true" GridPane.columnIndex="2">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="81.0" prefWidth="195.0" style="-fx-font-weight: bold;" styleClass="bold" text="A2" wrapText="true" GridPane.columnIndex="3">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="81.0" prefWidth="195.0" style="-fx-font-weight: bold;" styleClass="bold" text="A1" wrapText="true" GridPane.columnIndex="4">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </Label>
+                <Label prefHeight="81.0" prefWidth="117.0" text="Precio Actual" wrapText="true" GridPane.rowIndex="1">
+                    <font>
+                        <Font size="19.0" />
+                    </font>
+                </Label>
+            <Label prefHeight="81.0" prefWidth="195.0" text="Nuevo Precio" wrapText="true" GridPane.rowIndex="2">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <TextField fx:id="inputB" prefHeight="25.0" prefWidth="20.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="40.0" right="40.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="inputA" prefHeight="25.0" prefWidth="20.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="40.0" right="40.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="inputA2" prefHeight="25.0" prefWidth="20.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="40.0" right="40.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="inputA1" GridPane.columnIndex="4" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="41.0" right="40.0" />
+               </GridPane.margin>
+            </TextField>
+            <Label fx:id="labelB" alignment="CENTER" prefHeight="49.0" prefWidth="199.0" text="N/A" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelA" alignment="CENTER" prefHeight="49.0" prefWidth="199.0" text="N/A" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelA2" alignment="CENTER" prefHeight="49.0" prefWidth="199.0" text="N/A" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelA1" alignment="CENTER" prefHeight="49.0" prefWidth="199.0" text="N/A" GridPane.columnIndex="4" GridPane.rowIndex="1">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="errorB" alignment="TOP_CENTER" prefHeight="148.0" prefWidth="248.0" text="Introduce solo números positivos." textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="errorA" alignment="TOP_CENTER" prefHeight="148.0" prefWidth="248.0" text="Introduce solo números positivos." textFill="RED" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label fx:id="errorA2" alignment="TOP_CENTER" prefHeight="148.0" prefWidth="248.0" text="Introduce solo números positivos." textFill="RED" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <Label fx:id="errorA1" alignment="TOP_CENTER" prefHeight="148.0" prefWidth="248.0" text="Introduce solo números positivos." textFill="RED" visible="false" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+         </children>
+      </GridPane>
+        <Pane layoutX="800.0" layoutY="307.0" prefHeight="229.0" prefWidth="755.0" style="-fx-background-color: #BABABA;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+                <Button fx:id="saveChanges" layoutX="732.0" layoutY="53.0" mnemonicParsing="false" onAction="#saveChanges" prefHeight="54.0" prefWidth="213.0" styleClass="boton" text="Guardar Cambios" textFill="WHITE" textOverrun="CLIP">
+                    <font>
+                        <Font name="Verdana" size="12.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+              <Button fx:id="returnButton" layoutX="846.0" layoutY="122.0" mnemonicParsing="false" onAction="#returnMain" prefHeight="54.0" prefWidth="99.0" styleClass="boton" text="&lt;-- Volver" textFill="WHITE" textOverrun="CLIP">
+                  <font>
+                      <Font name="Verdana" size="12.0" />
+                  </font>
+                  <cursor>
+                      <Cursor fx:constant="HAND" />
+                  </cursor>
+              </Button>
+         </children>
+        </Pane>
+        <Pane fx:id="navbar" prefHeight="54.0" prefWidth="1000.0" style="-fx-background-color: #ACC2C5; -fx-effect: dropshadow( gaussian, rgba(0, 0, 0, 0.3), 10, 0.1, 0.0, 0.0 );" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Button fx:id="closeButton" layoutX="961.0" layoutY="15.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 5px;" text="X" />
+                <Button layoutX="923.0" layoutY="15.0" mnemonicParsing="false" onAction="#minimizeWindow" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 5px;" text="-" />
+            </children></Pane>
+        <Label layoutX="70.0" layoutY="95.0" styleClass="bold" text="Modificar el precio de las clases">
+            <font>
+                <Font size="36.0" />
+            </font>
+        </Label>
+    </children>
+</AnchorPane>

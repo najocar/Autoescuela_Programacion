@@ -1,0 +1,4 @@
+--patch-module
+com.najocar.autoescuela=_
+--add-reads
+com.najocar.autoescuela=ALL-UNNAMED
