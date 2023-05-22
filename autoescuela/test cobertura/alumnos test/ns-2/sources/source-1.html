@@ -1,0 +1,295 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > AlumnInfoController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.najocar.autoescuela.controllers</a>
+</div>
+
+<h1>Coverage Summary for Class: AlumnInfoController (com.najocar.autoescuela.controllers)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AlumnInfoController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/20)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/62)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.najocar.autoescuela.controllers;
+&nbsp;
+&nbsp;import com.najocar.autoescuela.App;
+&nbsp;import com.najocar.autoescuela.model.dao.AlumnoDAO;
+&nbsp;import com.najocar.autoescuela.model.dao.ClaseDAO;
+&nbsp;import com.najocar.autoescuela.model.domain.Alumno;
+&nbsp;import com.najocar.autoescuela.model.domain.Clase;
+&nbsp;import javafx.collections.FXCollections;
+&nbsp;import javafx.collections.ObservableList;
+&nbsp;import javafx.event.ActionEvent;
+&nbsp;import javafx.event.Event;
+&nbsp;import javafx.fxml.FXML;
+&nbsp;import javafx.scene.Node;
+&nbsp;import javafx.scene.control.Button;
+&nbsp;import javafx.scene.control.Label;
+&nbsp;import javafx.scene.control.TableColumn;
+&nbsp;import javafx.scene.control.TableView;
+&nbsp;import javafx.scene.control.cell.PropertyValueFactory;
+&nbsp;import javafx.scene.layout.Pane;
+&nbsp;import javafx.stage.Stage;
+&nbsp;
+&nbsp;import java.io.IOException;
+&nbsp;import java.net.URL;
+&nbsp;import java.sql.SQLException;
+&nbsp;import java.util.List;
+&nbsp;import java.util.ResourceBundle;
+&nbsp;
+<b class="nc">&nbsp;public class AlumnInfoController extends Controller {</b>
+&nbsp;    @FXML
+&nbsp;    private Pane navbar;
+&nbsp;    @FXML
+&nbsp;    private Button closeButton;
+&nbsp;    @FXML
+&nbsp;    private Button addToB;
+&nbsp;    @FXML
+&nbsp;    private TableView&lt;Clase&gt; tabla;
+&nbsp;    @FXML
+&nbsp;    private TableColumn colClase;
+&nbsp;    @FXML
+&nbsp;    private TableColumn colPrecio;
+&nbsp;    @FXML
+&nbsp;    private Label totalPrice;
+&nbsp;    @FXML
+&nbsp;    private Label errorLabel;
+&nbsp;    @FXML
+&nbsp;    private Label labelNombre;
+&nbsp;    @FXML
+&nbsp;    private Label labelDni;
+&nbsp;
+&nbsp;    private ObservableList&lt;Clase&gt; clases;
+&nbsp;
+<b class="nc">&nbsp;    ControlDni controlDni = ControlDni.getInstance();</b>
+&nbsp;
+<b class="nc">&nbsp;    private ClaseDAO cdao = new ClaseDAO();</b>
+&nbsp;
+<b class="nc">&nbsp;    private AlumnoDAO adao = new AlumnoDAO();</b>
+&nbsp;
+<b class="nc">&nbsp;    private double xOffset = 0;</b>
+<b class="nc">&nbsp;    private double yOffset = 0;</b>
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    public void returnMain() throws IOException {
+<b class="nc">&nbsp;        App.setRoot(&quot;index&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void initialize(URL url, ResourceBundle resourceBundle) {
+&nbsp;
+<b class="nc">&nbsp;        navbar.setOnMousePressed(event -&gt; {</b>
+<b class="nc">&nbsp;            xOffset = event.getSceneX();</b>
+<b class="nc">&nbsp;            yOffset = event.getSceneY();</b>
+&nbsp;        });
+&nbsp;
+<b class="nc">&nbsp;        navbar.setOnMouseDragged(event -&gt; {</b>
+<b class="nc">&nbsp;            Stage stage = (Stage) navbar.getScene().getWindow();</b>
+<b class="nc">&nbsp;            stage.setX(event.getScreenX() - xOffset);</b>
+<b class="nc">&nbsp;            stage.setY(event.getScreenY() - yOffset);</b>
+&nbsp;        });
+&nbsp;
+<b class="nc">&nbsp;        labelDni.setText(controlDni.getDni());</b>
+&nbsp;        try {
+<b class="nc">&nbsp;            labelNombre.setText(adao.findById(controlDni.getDni()).getName());</b>
+<b class="nc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        clases = FXCollections.observableArrayList();</b>
+<b class="nc">&nbsp;        this.colClase.setCellValueFactory(new PropertyValueFactory(&quot;name&quot;));</b>
+<b class="nc">&nbsp;        this.colPrecio.setCellValueFactory(new PropertyValueFactory(&quot;price&quot;));</b>
+&nbsp;
+&nbsp;        try {
+<b class="nc">&nbsp;            generateTable();</b>
+<b class="nc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    public void generateTable() throws SQLException {
+<b class="nc">&nbsp;        List&lt;Clase&gt; aux = adao.alumnoAllClases(controlDni.getDni());</b>
+<b class="nc">&nbsp;        double precioTotal = 0;</b>
+<b class="nc">&nbsp;        clases.setAll(aux);</b>
+<b class="nc">&nbsp;        for (Clase clase : clases) {</b>
+<b class="nc">&nbsp;            precioTotal += clase.getPrice();</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        totalPrice.setText(String.valueOf(precioTotal) + &quot;€&quot;);</b>
+<b class="nc">&nbsp;        this.tabla.setItems(clases);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // add buttons
+&nbsp;    @FXML
+&nbsp;    public void addToB() throws SQLException {
+<b class="nc">&nbsp;        this.add(1);</b>
+&nbsp;    }
+&nbsp;    @FXML
+&nbsp;    public void addToA() throws SQLException {
+<b class="nc">&nbsp;        this.add(2);</b>
+&nbsp;    }
+&nbsp;    @FXML
+&nbsp;    public void addToA2() throws SQLException {
+<b class="nc">&nbsp;        this.add(3);</b>
+&nbsp;    }
+&nbsp;    @FXML
+&nbsp;    public void addToA1() throws SQLException {
+<b class="nc">&nbsp;        this.add(4);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    // remove buttons
+&nbsp;    @FXML
+&nbsp;    public void removeFromB() throws SQLException {
+<b class="nc">&nbsp;        this.remove(1);</b>
+&nbsp;    }
+&nbsp;    @FXML
+&nbsp;    public void removeFromA() throws SQLException {
+<b class="nc">&nbsp;        this.remove(2);</b>
+&nbsp;    }
+&nbsp;    @FXML
+&nbsp;    public void removeFromA2() throws SQLException {
+<b class="nc">&nbsp;        this.remove(3);</b>
+&nbsp;    }
+&nbsp;    @FXML
+&nbsp;    public void removeFromA1() throws SQLException {
+<b class="nc">&nbsp;        this.remove(4);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void add(int i) throws SQLException{
+<b class="nc">&nbsp;        if (!clases.contains(cdao.findById(i))) {</b>
+<b class="nc">&nbsp;            cdao.insertAlumno(i, controlDni.getDni());</b>
+<b class="nc">&nbsp;            generateTable();</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            error(1);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private void remove(int i) throws SQLException{
+<b class="nc">&nbsp;        if (clases.contains(cdao.findById(i))) {</b>
+<b class="nc">&nbsp;            quitError();</b>
+<b class="nc">&nbsp;            cdao.removeAlumno(i, controlDni.getDni());</b>
+<b class="nc">&nbsp;            generateTable();</b>
+&nbsp;        } else {
+&nbsp;            //
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public void error(int n) {
+<b class="nc">&nbsp;        switch (n) {</b>
+&nbsp;            case 1:
+<b class="nc">&nbsp;                errorLabel.setText(&quot;Ya está inscrito a esta clase&quot;);</b>
+<b class="nc">&nbsp;                errorLabel.setVisible(true);</b>
+<b class="nc">&nbsp;                setTimeout(() -&gt; errorLabel.setVisible(false), 1000);</b>
+&nbsp;                break;
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public void quitError(){
+<b class="nc">&nbsp;        errorLabel.setVisible(false);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static void setTimeout(Runnable runnable, int delay){
+<b class="nc">&nbsp;        new Thread(() -&gt; {</b>
+&nbsp;            try {
+<b class="nc">&nbsp;                Thread.sleep(delay);</b>
+<b class="nc">&nbsp;                runnable.run();</b>
+&nbsp;            }
+<b class="nc">&nbsp;            catch (Exception e){</b>
+<b class="nc">&nbsp;                System.err.println(e);</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;        }).start();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-19 11:09</div>
+</div>
+</body>
+</html>

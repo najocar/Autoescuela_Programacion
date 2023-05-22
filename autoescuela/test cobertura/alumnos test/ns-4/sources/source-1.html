@@ -1,0 +1,327 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > AlumnoDAO</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.najocar.autoescuela.model.dao</a>
+</div>
+
+<h1>Coverage Summary for Class: AlumnoDAO (com.najocar.autoescuela.model.dao)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AlumnoDAO</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    55,6%
+  </span>
+  <span class="absValue">
+    (5/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (50/100)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.najocar.autoescuela.model.dao;
+&nbsp;
+&nbsp;import com.najocar.autoescuela.model.connections.ConnectionMySQL;
+&nbsp;import com.najocar.autoescuela.model.domain.Alumno;
+&nbsp;import com.najocar.autoescuela.model.domain.Clase;
+&nbsp;
+&nbsp;import java.sql.Connection;
+&nbsp;import java.sql.PreparedStatement;
+&nbsp;import java.sql.ResultSet;
+&nbsp;import java.sql.SQLException;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;public class AlumnoDAO implements DAO&lt;Alumno&gt; {
+&nbsp;    private final static String FINDALL = &quot;SELECT * from alumnos&quot;;
+&nbsp;    private final static String FINBYID = &quot;SELECT * from alumnos WHERE dni=?&quot;;
+&nbsp;    private final static String INSERT = &quot;INSERT INTO alumnos (dni,nombre) VALUES (?,?)&quot;;
+&nbsp;    private final static String UPDATE = &quot;UPDATE alumnos SET nombre=? WHERE dni=?&quot;;
+&nbsp;    private final static String UPDATEJOIN = &quot;UPDATE clases_alumnoes SET alumnoes_dni=? WHERE dni=?&quot;;
+&nbsp;    private final static String DELETE = &quot;DELETE FROM alumnos WHERE dni=?&quot;;
+&nbsp;
+&nbsp;    private final static String DELETECLASES = &quot;DELETE FROM clases_alumnoes WHERE alumnoes_dni=?&quot;;
+&nbsp;    private final static String FINDBYCLASE = &quot;SELECT * from clases_alumnoes WHERE clase_id=?&quot;;
+&nbsp;
+&nbsp;    private final static String FINDALLCLASES = &quot;SELECT c.id, c.nombre, c.precio from clases_alumnoes a join clases c on a.clase_id = c.id WHERE alumnoes_dni = ?&quot;;
+&nbsp;
+&nbsp;    private Connection conn;
+&nbsp;
+<b class="nc">&nbsp;    public AlumnoDAO(Connection conn) {</b>
+<b class="nc">&nbsp;        this.conn = conn;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public AlumnoDAO() {</b>
+<b class="fc">&nbsp;        this.conn = ConnectionMySQL.getConnect();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * find all students
+&nbsp;     * @return List of students
+&nbsp;     * @throws SQLException
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public List&lt;Alumno&gt; findAll() throws SQLException {
+<b class="nc">&nbsp;        List&lt;Alumno&gt; result = new ArrayList();</b>
+<b class="nc">&nbsp;        try (PreparedStatement pst = this.conn.prepareStatement(FINDALL)) {</b>
+<b class="nc">&nbsp;            try (ResultSet res = pst.executeQuery()) {</b>
+<b class="nc">&nbsp;                while (res.next()) {</b>
+<b class="nc">&nbsp;                    Alumno a = new Alumno();</b>
+<b class="nc">&nbsp;                    a.setDni(res.getString(&quot;dni&quot;));</b>
+<b class="nc">&nbsp;                    a.setName(res.getString(&quot;nombre&quot;));</b>
+<b class="nc">&nbsp;                    result.add(a);</b>
+<b class="nc">&nbsp;                }</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return result;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * find student by dni
+&nbsp;     * @param id dni of student to find
+&nbsp;     * @return student
+&nbsp;     * @throws SQLException
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public Alumno findById(String id) throws SQLException {
+<b class="fc">&nbsp;        Alumno result = null;</b>
+<b class="fc">&nbsp;        try (PreparedStatement pst = this.conn.prepareStatement(FINBYID)) {</b>
+<b class="fc">&nbsp;            pst.setString(1, id);</b>
+<b class="fc">&nbsp;            try (ResultSet res = pst.executeQuery()) {</b>
+<b class="fc">&nbsp;                if (res.next()) {</b>
+<b class="fc">&nbsp;                    result = new Alumno();</b>
+<b class="fc">&nbsp;                    result.setDni(res.getString(&quot;dni&quot;));</b>
+<b class="fc">&nbsp;                    result.setName(res.getString(&quot;nombre&quot;));</b>
+&nbsp;                }
+<b class="fc">&nbsp;            }</b>
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return result;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * insert student
+&nbsp;     * @param entity student to insert
+&nbsp;     * @return inserted student
+&nbsp;     * @throws SQLException
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public Alumno save(Alumno entity) throws SQLException {
+<b class="fc">&nbsp;        Alumno result = new Alumno();</b>
+<b class="fc">&nbsp;        if (entity == null) {</b>
+<b class="nc">&nbsp;            return result;</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        Alumno a = findById(entity.getDni());</b>
+<b class="fc">&nbsp;        if (a == null) {</b>
+&nbsp;            //INSERT
+<b class="fc">&nbsp;            try (PreparedStatement pst = this.conn.prepareStatement(INSERT)) {</b>
+<b class="fc">&nbsp;                pst.setString(1, entity.getDni());</b>
+<b class="fc">&nbsp;                pst.setString(2, entity.getName());</b>
+<b class="fc">&nbsp;                pst.executeUpdate();</b>
+&nbsp;                /** Clases */
+&nbsp;
+<b class="fc">&nbsp;            }</b>
+&nbsp;        } else {
+&nbsp;            //UPDATE
+<b class="fc">&nbsp;            try (PreparedStatement pst = this.conn.prepareStatement(UPDATE)) {</b>
+<b class="fc">&nbsp;                pst.setString(1, entity.getName());</b>
+<b class="fc">&nbsp;                pst.setString(2, entity.getDni());</b>
+<b class="fc">&nbsp;                pst.executeUpdate();</b>
+<b class="fc">&nbsp;            }</b>
+&nbsp;            /** Clases */
+&nbsp;                /*
+&nbsp;                if (alumnoAllClases(entity.getDni()).size() &gt; 0) {
+&nbsp;                    try (PreparedStatement pst = this.conn.prepareStatement(UPDATEJOIN)) {
+&nbsp;                        pst.setString(1, entity.getDni());
+&nbsp;                        pst.setString(2, entity.getDni());
+&nbsp;                        pst.executeUpdate();
+&nbsp;                    }
+&nbsp;                }
+&nbsp;               */
+&nbsp;        }
+<b class="fc">&nbsp;        result = entity;</b>
+<b class="fc">&nbsp;        return result;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Delete alumn from database
+&nbsp;     * @param entity alumn  to remove
+&nbsp;     * @return eliminated student
+&nbsp;     * @throws SQLException
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public Alumno delete(Alumno entity) throws SQLException {
+<b class="fc">&nbsp;        Alumno result = new Alumno();</b>
+<b class="fc">&nbsp;        if (entity == null) {</b>
+<b class="nc">&nbsp;            return result;</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        Alumno a = findById(entity.getDni());</b>
+<b class="fc">&nbsp;        if (a == null) {</b>
+<b class="nc">&nbsp;            return result;</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        if (alumnoAllClases(entity.getDni()).size() &gt; 0) {</b>
+<b class="nc">&nbsp;            try (PreparedStatement pst = this.conn.prepareStatement(DELETECLASES)) {</b>
+<b class="nc">&nbsp;                pst.setString(1, entity.getDni());</b>
+<b class="nc">&nbsp;                pst.executeUpdate();</b>
+<b class="nc">&nbsp;            }</b>
+&nbsp;        }
+<b class="fc">&nbsp;        try (PreparedStatement pst = this.conn.prepareStatement(DELETE)) {</b>
+<b class="fc">&nbsp;            pst.setString(1, entity.getDni());</b>
+<b class="fc">&nbsp;            pst.executeUpdate();</b>
+<b class="fc">&nbsp;            result = entity;</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;
+<b class="fc">&nbsp;        return result;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void close() throws Exception {
+&nbsp;
+<b class="nc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Find all students by class
+&nbsp;     * @param a class to find students
+&nbsp;     * @return List of students found in the class
+&nbsp;     * @throws SQLException
+&nbsp;     */
+&nbsp;    public List&lt;Alumno&gt; findByClase(Clase a) throws SQLException {
+<b class="nc">&nbsp;        List&lt;Alumno&gt; result = null;</b>
+<b class="nc">&nbsp;        if (a == null) {</b>
+<b class="nc">&nbsp;            return result;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        result = new ArrayList();</b>
+<b class="nc">&nbsp;        ClaseDAO cdao = new ClaseDAO(this.conn);</b>
+<b class="nc">&nbsp;        Clase _a = cdao.findById(a.getId());</b>
+<b class="nc">&nbsp;        if (_a == null) {</b>
+<b class="nc">&nbsp;            return result;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        try (PreparedStatement pst = this.conn.prepareStatement(FINDBYCLASE)) {</b>
+<b class="nc">&nbsp;            pst.setInt(1, a.getId());</b>
+<b class="nc">&nbsp;            try (ResultSet res = pst.executeQuery()) {</b>
+<b class="nc">&nbsp;                while (res.next()) {</b>
+<b class="nc">&nbsp;                    Alumno l = new Alumno();</b>
+<b class="nc">&nbsp;                    l.setDni(res.getString(&quot;dni&quot;));</b>
+<b class="nc">&nbsp;                    l.setName(res.getString(&quot;nombre&quot;));</b>
+<b class="nc">&nbsp;                    l.addClase(_a);</b>
+<b class="nc">&nbsp;                    result.add(l);</b>
+<b class="nc">&nbsp;                }</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return result;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * all students classes
+&nbsp;     * @param dni dni of student
+&nbsp;     * @return list of classes the student is in
+&nbsp;     * @throws SQLException
+&nbsp;     */
+&nbsp;    public List&lt;Clase&gt; alumnoAllClases(String dni) throws SQLException {
+<b class="fc">&nbsp;        List&lt;Clase&gt; result = null;</b>
+<b class="fc">&nbsp;        if (dni == null &amp;&amp; findById(dni) == null) {</b>
+<b class="nc">&nbsp;            return result;</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        result = new ArrayList();</b>
+<b class="fc">&nbsp;        try (PreparedStatement pst = this.conn.prepareStatement(FINDALLCLASES)) {</b>
+<b class="fc">&nbsp;            pst.setString(1, dni);</b>
+<b class="fc">&nbsp;            try (ResultSet res = pst.executeQuery()) {</b>
+<b class="fc">&nbsp;                while (res.next()) {</b>
+<b class="nc">&nbsp;                    Clase a = new Clase();</b>
+<b class="nc">&nbsp;                    a.setId(res.getInt(&quot;id&quot;));</b>
+<b class="nc">&nbsp;                    a.setName(res.getString(&quot;nombre&quot;));</b>
+<b class="nc">&nbsp;                    a.setPrice(res.getDouble(&quot;precio&quot;));</b>
+<b class="nc">&nbsp;                    result.add(a);</b>
+<b class="nc">&nbsp;                }</b>
+<b class="fc">&nbsp;            }</b>
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return result;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-19 11:09</div>
+</div>
+</body>
+</html>

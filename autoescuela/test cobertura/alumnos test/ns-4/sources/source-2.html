@@ -1,0 +1,317 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ClaseDAO</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.najocar.autoescuela.model.dao</a>
+</div>
+
+<h1>Coverage Summary for Class: ClaseDAO (com.najocar.autoescuela.model.dao)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ClaseDAO</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/94)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.najocar.autoescuela.model.dao;
+&nbsp;
+&nbsp;import com.najocar.autoescuela.model.connections.ConnectionMySQL;
+&nbsp;import com.najocar.autoescuela.model.domain.*;
+&nbsp;import com.najocar.autoescuela.model.domain.Clase;
+&nbsp;import com.najocar.autoescuela.model.domain.Clase;
+&nbsp;import com.najocar.autoescuela.model.domain.Clase;
+&nbsp;
+&nbsp;import java.sql.Connection;
+&nbsp;import java.sql.PreparedStatement;
+&nbsp;import java.sql.ResultSet;
+&nbsp;import java.sql.SQLException;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;public class ClaseDAO implements DAO&lt;Clase&gt;{
+&nbsp;    private final static String FINDALL =&quot;SELECT * from clases&quot;;
+&nbsp;    private final static String FINBYID =&quot;SELECT * from clases WHERE id=?&quot;;
+&nbsp;    private final static String FINBYNAME =&quot;SELECT * from clases WHERE nombre=?&quot;;
+&nbsp;    private final static String INSERT =&quot;INSERT INTO clases (nombre,precio) VALUES (?,?)&quot;;
+&nbsp;    private final static String UPDATE =&quot;UPDATE clases SET nombre=?, precio=? WHERE id=?&quot;;
+&nbsp;    private final static String DELETE =&quot;DELETE FROM clases WHERE id=?&quot;;
+&nbsp;
+&nbsp;    private final static String SAVERELACION =&quot;INSERT INTO clases_alumnoes (clase_id, alumnoes_dni) VALUES (?,?)&quot;;
+&nbsp;    private final static String DELETERELACION =&quot;DELETE FROM clases_alumnoes WHERE clase_id = ? and alumnoes_dni = ?&quot;;
+&nbsp;
+&nbsp;    private Connection conn;
+<b class="nc">&nbsp;    public ClaseDAO(Connection conn) {</b>
+<b class="nc">&nbsp;        this.conn = conn;</b>
+&nbsp;    }
+<b class="nc">&nbsp;    public ClaseDAO() {</b>
+<b class="nc">&nbsp;        this.conn= ConnectionMySQL.getConnect();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * find all classes
+&nbsp;     * @return list of classes
+&nbsp;     * @throws SQLException
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public List findAll() throws SQLException {
+<b class="nc">&nbsp;        List&lt;Clase&gt; result = new ArrayList();</b>
+<b class="nc">&nbsp;        try(PreparedStatement pst=this.conn.prepareStatement(FINDALL)){</b>
+<b class="nc">&nbsp;            try(ResultSet res = pst.executeQuery()){</b>
+<b class="nc">&nbsp;                while(res.next()) {</b>
+<b class="nc">&nbsp;                    Clase a = new Clase();</b>
+<b class="nc">&nbsp;                    a.setId(res.getInt(&quot;id&quot;));</b>
+<b class="nc">&nbsp;                    a.setName(res.getString(&quot;nombre&quot;));</b>
+<b class="nc">&nbsp;                    a.setPrice(res.getDouble(&quot;precio&quot;));</b>
+<b class="nc">&nbsp;                    result.add(a);</b>
+<b class="nc">&nbsp;                }</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return result;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * find class by name
+&nbsp;     * @param nombre name of the class
+&nbsp;     * @return class or null if not found
+&nbsp;     * @throws SQLException
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public Clase findById(String nombre) throws SQLException {
+<b class="nc">&nbsp;        Clase result = null;</b>
+<b class="nc">&nbsp;        try(PreparedStatement pst=this.conn.prepareStatement(FINBYNAME)){</b>
+<b class="nc">&nbsp;            pst.setString(1, nombre);</b>
+<b class="nc">&nbsp;            try(ResultSet res = pst.executeQuery()){</b>
+<b class="nc">&nbsp;                if(res.next()) {</b>
+<b class="nc">&nbsp;                    result = new Clase();</b>
+<b class="nc">&nbsp;                    result.setId(res.getInt(&quot;id&quot;));</b>
+<b class="nc">&nbsp;                    result.setName(res.getString(&quot;nombre&quot;));</b>
+<b class="nc">&nbsp;                    result.setPrice(res.getDouble(&quot;precio&quot;));</b>
+&nbsp;                }
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return result;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * find class by id
+&nbsp;     * @param id id of the class
+&nbsp;     * @return class or null if not found
+&nbsp;     * @throws SQLException
+&nbsp;     */
+&nbsp;    public Clase findById(int id) throws SQLException {
+<b class="nc">&nbsp;        Clase result = null;</b>
+<b class="nc">&nbsp;        try(PreparedStatement pst=this.conn.prepareStatement(FINBYID)){</b>
+<b class="nc">&nbsp;            pst.setInt(1, id);</b>
+<b class="nc">&nbsp;            try(ResultSet res = pst.executeQuery()){</b>
+<b class="nc">&nbsp;                if(res.next()) {</b>
+<b class="nc">&nbsp;                    result = new Clase();</b>
+<b class="nc">&nbsp;                    result.setId(res.getInt(&quot;id&quot;));</b>
+<b class="nc">&nbsp;                    result.setName(res.getString(&quot;nombre&quot;));</b>
+<b class="nc">&nbsp;                    result.setPrice(res.getDouble(&quot;precio&quot;));</b>
+&nbsp;                }
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return result;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * save a clase
+&nbsp;     * @param entity clase to save
+&nbsp;     * @return clase saved
+&nbsp;     * @throws SQLException
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public Clase save(Clase entity) throws SQLException {
+<b class="nc">&nbsp;        Clase result = new Clase();</b>
+<b class="nc">&nbsp;        if(entity==null) {</b>
+<b class="nc">&nbsp;            return result;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        Clase a = findById(entity.getId());</b>
+<b class="nc">&nbsp;        if(a == null) {</b>
+&nbsp;            //INSERT
+<b class="nc">&nbsp;            try(PreparedStatement pst=this.conn.prepareStatement(INSERT)){</b>
+<b class="nc">&nbsp;                pst.setString(1, entity.getName());</b>
+<b class="nc">&nbsp;                pst.setDouble(2, entity.getPrice());</b>
+<b class="nc">&nbsp;                pst.executeUpdate();</b>
+&nbsp;                /** Clases */
+&nbsp;
+<b class="nc">&nbsp;            }</b>
+&nbsp;        }else {
+&nbsp;            //UPDATE
+<b class="nc">&nbsp;            try(PreparedStatement pst=this.conn.prepareStatement(UPDATE)){</b>
+<b class="nc">&nbsp;                pst.setString(1, entity.getName());</b>
+<b class="nc">&nbsp;                pst.setDouble(2, entity.getPrice());</b>
+<b class="nc">&nbsp;                pst.setInt(3, a.getId());</b>
+<b class="nc">&nbsp;                pst.executeUpdate();</b>
+<b class="nc">&nbsp;            }</b>
+&nbsp;            /** Clases */
+&nbsp;
+&nbsp;        }
+<b class="nc">&nbsp;        result=entity;</b>
+<b class="nc">&nbsp;        return result;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * delete a clase
+&nbsp;     * @param entity clase to delete
+&nbsp;     * @return clase deleted
+&nbsp;     * @throws SQLException
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public Clase delete(Clase entity) throws SQLException {
+<b class="nc">&nbsp;        Clase result = new Clase();</b>
+<b class="nc">&nbsp;        if (entity == null){</b>
+<b class="nc">&nbsp;            return result;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        Clase a = findById(entity.getId());</b>
+<b class="nc">&nbsp;        if (a == null){</b>
+<b class="nc">&nbsp;            return result;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        try(PreparedStatement pst=this.conn.prepareStatement(DELETE)){</b>
+<b class="nc">&nbsp;            pst.setInt(1, entity.getId());</b>
+<b class="nc">&nbsp;            pst.executeUpdate();</b>
+<b class="nc">&nbsp;            result = entity;</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return result;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void close() throws Exception {
+&nbsp;
+<b class="nc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * add student to the class
+&nbsp;     * @param id id of the class
+&nbsp;     * @param dni dni of the student
+&nbsp;     * @return list of classes that the student is enrolled in
+&nbsp;     */
+&nbsp;    public List&lt;Clase&gt; insertAlumno(int id, String dni) throws SQLException {
+<b class="nc">&nbsp;        AlumnoDAO adao = new AlumnoDAO(this.conn);</b>
+<b class="nc">&nbsp;        Alumno alumno = adao.findById(dni);</b>
+<b class="nc">&nbsp;        Clase clase = findById(id);</b>
+&nbsp;        //List&lt;Alumno&gt; alumnosAntiguos = adao.findByClase(clase);
+&nbsp;        //List&lt;Clase&gt; clasesAntiguos = alumno.getClases();
+&nbsp;
+<b class="nc">&nbsp;        clase.addAlumno(alumno);</b>
+<b class="nc">&nbsp;        save(clase);</b>
+&nbsp;
+<b class="nc">&nbsp;        alumno.addClase(clase);</b>
+<b class="nc">&nbsp;        adao.save(alumno);</b>
+&nbsp;
+<b class="nc">&nbsp;        try(PreparedStatement pst=this.conn.prepareStatement(SAVERELACION)){</b>
+<b class="nc">&nbsp;            pst.setInt(1, clase.getId());</b>
+<b class="nc">&nbsp;            pst.setString(2, alumno.getDni());</b>
+<b class="nc">&nbsp;            pst.executeUpdate();</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return alumno.getClases();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * remove student to the class
+&nbsp;     * @param id id of the class
+&nbsp;     * @param dni dni of the student
+&nbsp;     * @return list of classes that the student is enrolled in
+&nbsp;     * @throws SQLException
+&nbsp;     */
+&nbsp;    public List&lt;Clase&gt; removeAlumno(int id, String dni) throws SQLException {
+<b class="nc">&nbsp;        AlumnoDAO adao = new AlumnoDAO(this.conn);</b>
+<b class="nc">&nbsp;        Alumno alumno = adao.findById(dni);</b>
+<b class="nc">&nbsp;        Clase clase = findById(id);</b>
+&nbsp;
+<b class="nc">&nbsp;        try(PreparedStatement pst=this.conn.prepareStatement(DELETERELACION)){</b>
+<b class="nc">&nbsp;            pst.setInt(1, clase.getId());</b>
+<b class="nc">&nbsp;            pst.setString(2, alumno.getDni());</b>
+<b class="nc">&nbsp;            pst.executeUpdate();</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return alumno.getClases();</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-19 11:09</div>
+</div>
+</body>
+</html>
