@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-05-22T14:26:50.753851700Z</date>
+  <millis>1684765610753</millis>
+  <nanos>851700</nanos>
+  <sequence>1</sequence>
+  <logger>com.najocar.autoescuela.utils.Logger</logger>
+  <level>INFO</level>
+  <class>com.najocar.autoescuela.utils.Logger</class>
+  <method>info</method>
+  <thread>27</thread>
+  <message>Alumno eliminado: Persona{dni='51213694P', name='jose carlos'}</message>
+</record>
+<record>
+  <date>2023-05-22T14:51:44.241600900Z</date>
+  <millis>1684767104241</millis>
+  <nanos>600900</nanos>
+  <sequence>2</sequence>
+  <logger>com.najocar.autoescuela.utils.Logger</logger>
+  <level>INFO</level>
+  <class>com.najocar.autoescuela.utils.Logger</class>
+  <method>info</method>
+  <thread>27</thread>
+  <message>Alumno actualizado: Persona{dni='98478347Y', name='Alvaro'}</message>
+</record>
+<record>
+  <date>2023-05-22T14:59:42.125821800Z</date>
+  <millis>1684767582125</millis>
+  <nanos>821800</nanos>
+  <sequence>3</sequence>
+  <logger>com.najocar.autoescuela.utils.Logger</logger>
+  <level>INFO</level>
+  <class>com.najocar.autoescuela.utils.Logger</class>
+  <method>info</method>
+  <thread>27</thread>
+  <message>Alumno registrado: Persona{dni='51213694P', name='jose carlos'}</message>
+</record>
+<record>
+  <date>2023-05-22T15:00:07.804705Z</date>
+  <millis>1684767607804</millis>
+  <nanos>705000</nanos>
+  <sequence>4</sequence>
+  <logger>com.najocar.autoescuela.utils.Logger</logger>
+  <level>INFO</level>
+  <class>com.najocar.autoescuela.utils.Logger</class>
+  <method>info</method>
+  <thread>27</thread>
+  <message>Alumno eliminado: Persona{dni='51213694P', name='jose carlos'}</message>
+</record>
+<record>
+  <date>2023-05-22T15:00:15.734210200Z</date>
+  <millis>1684767615734</millis>
+  <nanos>210200</nanos>
+  <sequence>5</sequence>
+  <logger>com.najocar.autoescuela.utils.Logger</logger>
+  <level>INFO</level>
+  <class>com.najocar.autoescuela.utils.Logger</class>
+  <method>info</method>
+  <thread>27</thread>
+  <message>Alumno actualizado: Persona{dni='98478347Y', name='Alvarito'}</message>
+</record>
+</log>
