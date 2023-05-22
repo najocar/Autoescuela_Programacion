@@ -1,0 +1,26 @@
+
+`	java:S112T"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+`	java:S112^"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+E
+java:S3740&"/Provide the parametrized type for this generic.(©¬ßð
+J
+java:S3740("/Provide the parametrized type for this generic.(Ž ’çøÿÿÿÿ
+J
+java:S3740X"/Provide the parametrized type for this generic.(èþææûÿÿÿÿ
+J
+java:S3740Y"/Provide the parametrized type for this generic.(¶í€Àÿÿÿÿÿ
+a
+java:S1301¨"KReplace this "switch" statement by "if" statements to increase readability.(Âúïi
+7	java:S131¨""Add a default case to this switch.(Âúïi
+z
+java:S2142»"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(ñ“Š±üÿÿÿÿ
+T	java:S106¼"9Replace this use of System.out or System.err by a logger.(Þàš¬øÿÿÿÿ
+^
+java:S1128"HRemove this unused import 'com.najocar.autoescuela.model.domain.Alumno'.(ÇÐ¾µ
+P
+java:S1128
+"5Remove this unused import 'javafx.event.ActionEvent'.(î•¯¼ýÿÿÿÿ
+E
+java:S1128"/Remove this unused import 'javafx.event.Event'.(ô”áñ
+D
+java:S1128".Remove this unused import 'javafx.scene.Node'.(ÑÖ¬ï

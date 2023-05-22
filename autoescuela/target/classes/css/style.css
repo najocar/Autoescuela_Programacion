@@ -1,0 +1,19 @@
+.bold{
+    -fx-font-weight: bold;
+}
+
+.boton{
+    -fx-background-color:  #3164F4;
+}
+
+.boton:hover{
+    -fx-background-color: #4b76ef;
+}
+
+.deleteButton{
+    -fx-background-color:  #FF7373;
+}
+
+.deleteButton:hover{
+    -fx-background-color: #FF8686;
+}
