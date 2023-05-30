@@ -16,13 +16,13 @@ public class AlumnoDAO implements DAO<Alumno> {
     private final static String FINBYID = "SELECT * from alumnos WHERE dni=?";
     private final static String INSERT = "INSERT INTO alumnos (dni,nombre) VALUES (?,?)";
     private final static String UPDATE = "UPDATE alumnos SET nombre=? WHERE dni=?";
-    private final static String UPDATEJOIN = "UPDATE clases_alumnoes SET alumnoes_dni=? WHERE dni=?";
+    private final static String UPDATEJOIN = "UPDATE clases_alumnos SET alumnos_dni=? WHERE dni=?";
     private final static String DELETE = "DELETE FROM alumnos WHERE dni=?";
 
-    private final static String DELETECLASES = "DELETE FROM clases_alumnoes WHERE alumnoes_dni=?";
-    private final static String FINDBYCLASE = "SELECT * from clases_alumnoes WHERE clase_id=?";
+    private final static String DELETECLASES = "DELETE FROM clases_alumnos WHERE alumnos_dni=?";
+    private final static String FINDBYCLASE = "SELECT * from clases_alumnos WHERE clase_id=?";
 
-    private final static String FINDALLCLASES = "SELECT c.id, c.nombre, c.precio from clases_alumnoes a join clases c on a.clase_id = c.id WHERE alumnoes_dni = ?";
+    private final static String FINDALLCLASES = "SELECT c.id, c.nombre, c.precio from clases_alumnos a join clases c on a.clase_id = c.id WHERE alumnos_dni = ?";
 
     private Connection conn;
 

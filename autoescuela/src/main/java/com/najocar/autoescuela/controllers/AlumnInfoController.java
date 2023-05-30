@@ -11,17 +11,16 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.StandardSocketOptions;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -39,6 +38,8 @@ public class AlumnInfoController extends Controller {
     @FXML
     private TableColumn colPrecio;
     @FXML
+    private TableColumn colFecha;
+    @FXML
     private Label totalPrice;
     @FXML
     private Label errorLabel;
@@ -46,6 +47,10 @@ public class AlumnInfoController extends Controller {
     private Label labelNombre;
     @FXML
     private Label labelDni;
+    @FXML
+    private ChoiceBox choice;
+    @FXML
+    private Button choiceButton;
 
     private ObservableList<Clase> clases;
 
@@ -87,6 +92,7 @@ public class AlumnInfoController extends Controller {
         clases = FXCollections.observableArrayList();
         this.colClase.setCellValueFactory(new PropertyValueFactory("name"));
         this.colPrecio.setCellValueFactory(new PropertyValueFactory("price"));
+        //this.colPrecio.setCellValueFactory(new PropertyValueFactory("date"));
 
         try {
             generateTable();
@@ -94,6 +100,8 @@ public class AlumnInfoController extends Controller {
             throw new RuntimeException(e);
         }
 
+        // choicebox
+        //generateChoiceBox();
     }
 
     @FXML
@@ -106,46 +114,61 @@ public class AlumnInfoController extends Controller {
         }
         totalPrice.setText(String.valueOf(precioTotal) + "€");
         this.tabla.setItems(clases);
+
+        generateChoiceBox();
     }
 
-    // add buttons
     @FXML
-    public void addToB() throws SQLException {
-        this.add(1);
-    }
-    @FXML
-    public void addToA() throws SQLException {
-        this.add(2);
-    }
-    @FXML
-    public void addToA2() throws SQLException {
-        this.add(3);
-    }
-    @FXML
-    public void addToA1() throws SQLException {
-        this.add(4);
+    public void generateChoiceBox() {
+        List<Clase> aux = null;
+        choice.getItems().removeAll(choice.getItems());
+        try {
+            aux = cdao.findAll();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        for (Clase clase : aux) {
+            if (!clases.contains(clase)) {
+                this.choice.getItems().add(clase.getName());
+            }
+        }
     }
 
+    @FXML
+    public void choiceSelection() throws SQLException {
+        if (choice.getValue() != null) {
+            cdao.insertAlumno(cdao.findById((String) choice.getValue()).getId(), controlDni.getDni());
+            generateTable();
+        } else {
+            error(2);
+        }
+    }
 
     // remove buttons
     @FXML
     public void removeFromB() throws SQLException {
-        this.remove(1);
+        Clase aux = tabla.getSelectionModel().getSelectedItem();
+        if (aux != null){
+            this.remove(cdao.findById(aux.getId()).getId());
+        }
     }
+
     @FXML
     public void removeFromA() throws SQLException {
         this.remove(2);
     }
+
     @FXML
     public void removeFromA2() throws SQLException {
         this.remove(3);
     }
+
     @FXML
     public void removeFromA1() throws SQLException {
         this.remove(4);
     }
 
-    private void add(int i) throws SQLException{
+    private void add(int i) throws SQLException {
         if (!clases.contains(cdao.findById(i))) {
             cdao.insertAlumno(i, controlDni.getDni());
             generateTable();
@@ -154,7 +177,7 @@ public class AlumnInfoController extends Controller {
         }
     }
 
-    private void remove(int i) throws SQLException{
+    private void remove(int i) throws SQLException {
         if (clases.contains(cdao.findById(i))) {
             quitError();
             cdao.removeAlumno(i, controlDni.getDni());
@@ -171,20 +194,24 @@ public class AlumnInfoController extends Controller {
                 errorLabel.setVisible(true);
                 setTimeout(() -> errorLabel.setVisible(false), 1000);
                 break;
+            case 2:
+                errorLabel.setText("Debes seleccionar una clase");
+                errorLabel.setVisible(true);
+                setTimeout(() -> errorLabel.setVisible(false), 1000);
+                break;
         }
     }
 
-    public void quitError(){
+    public void quitError() {
         errorLabel.setVisible(false);
     }
 
-    public static void setTimeout(Runnable runnable, int delay){
+    public static void setTimeout(Runnable runnable, int delay) {
         new Thread(() -> {
             try {
                 Thread.sleep(delay);
                 runnable.run();
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 System.err.println(e);
             }
         }).start();

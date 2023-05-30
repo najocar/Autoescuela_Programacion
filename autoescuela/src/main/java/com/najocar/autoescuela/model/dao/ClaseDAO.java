@@ -21,8 +21,8 @@ public class ClaseDAO implements DAO<Clase>{
     private final static String UPDATE ="UPDATE clases SET nombre=?, precio=? WHERE id=?";
     private final static String DELETE ="DELETE FROM clases WHERE id=?";
 
-    private final static String SAVERELACION ="INSERT INTO clases_alumnoes (clase_id, alumnoes_dni) VALUES (?,?)";
-    private final static String DELETERELACION ="DELETE FROM clases_alumnoes WHERE clase_id = ? and alumnoes_dni = ?";
+    private final static String SAVERELACION ="INSERT INTO clases_alumnos (clase_id, alumnos_dni) VALUES (?,?)";
+    private final static String DELETERELACION ="DELETE FROM clases_alumnos WHERE clase_id = ? and alumnos_dni = ?";
 
     private Connection conn;
     public ClaseDAO(Connection conn) {
