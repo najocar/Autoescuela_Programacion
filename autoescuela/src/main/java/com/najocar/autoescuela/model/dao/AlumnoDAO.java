@@ -3,6 +3,7 @@ package com.najocar.autoescuela.model.dao;
 import com.najocar.autoescuela.model.connections.ConnectionMySQL;
 import com.najocar.autoescuela.model.domain.Alumno;
 import com.najocar.autoescuela.model.domain.Clase;
+import com.najocar.autoescuela.model.domain.Inscripcion;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,7 +23,8 @@ public class AlumnoDAO implements DAO<Alumno> {
     private final static String DELETECLASES = "DELETE FROM clases_alumnos WHERE alumnos_dni=?";
     private final static String FINDBYCLASE = "SELECT * from clases_alumnos WHERE clase_id=?";
 
-    private final static String FINDALLCLASES = "SELECT c.id, c.nombre, c.precio from clases_alumnos a join clases c on a.clase_id = c.id WHERE alumnos_dni = ?";
+    private final static String FINDALLCLASES = "SELECT c.id, c.nombre, c.precio, a.fecha from clases_alumnos a join clases c on a.clase_id = c.id WHERE a.alumnos_dni = ?";
+    private final static String FINDALLRECENTCLASES = "SELECT c.id, c.nombre, c.precio, a.fecha from clases_alumnos a join clases c on a.clase_id = c.id WHERE a.alumnos_dni = ? AND a.fecha > DATE_SUB(CURDATE(), INTERVAL 1 MONTH)";
 
     private Connection conn;
 
@@ -200,8 +202,8 @@ public class AlumnoDAO implements DAO<Alumno> {
      * @return list of classes the student is in
      * @throws SQLException
      */
-    public List<Clase> alumnoAllClases(String dni) throws SQLException {
-        List<Clase> result = null;
+    public List<Inscripcion> alumnoAllClases(String dni) throws SQLException {
+        List<Inscripcion> result = null;
         if (dni == null && findById(dni) == null) {
             return result;
         }
@@ -211,10 +213,34 @@ public class AlumnoDAO implements DAO<Alumno> {
             pst.setString(1, dni);
             try (ResultSet res = pst.executeQuery()) {
                 while (res.next()) {
-                    Clase a = new Clase();
+                    Inscripcion a = new Inscripcion();
                     a.setId(res.getInt("id"));
                     a.setName(res.getString("nombre"));
                     a.setPrice(res.getDouble("precio"));
+                    a.setDate(res.getDate("fecha"));
+                    result.add(a);
+                }
+            }
+        }
+        return result;
+    }
+
+    public List<Inscripcion> alumnoAllRecentClases(String dni) throws SQLException {
+        List<Inscripcion> result = null;
+        if (dni == null && findById(dni) == null) {
+            return result;
+        }
+
+        result = new ArrayList();
+        try (PreparedStatement pst = this.conn.prepareStatement(FINDALLRECENTCLASES)) {
+            pst.setString(1, dni);
+            try (ResultSet res = pst.executeQuery()) {
+                while (res.next()) {
+                    Inscripcion a = new Inscripcion();
+                    a.setId(res.getInt("id"));
+                    a.setName(res.getString("nombre"));
+                    a.setPrice(res.getDouble("precio"));
+                    a.setDate(res.getDate("fecha"));
                     result.add(a);
                 }
             }

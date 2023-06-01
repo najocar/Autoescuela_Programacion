@@ -83,6 +83,20 @@ public class PrecioClasesController extends Controller {
         }
     }
 
+    @Override
+    public void closeWindow(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
+    }
+
+    @Override
+    public void minimizeWindow(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.setIconified(true);
+    }
+
     public void saveChanges() throws SQLException {
         Clase clase;
         if (checkFields()) {

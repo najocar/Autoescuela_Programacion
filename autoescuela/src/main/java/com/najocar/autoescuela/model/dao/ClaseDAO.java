@@ -10,7 +10,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ClaseDAO implements DAO<Clase>{
@@ -18,11 +21,11 @@ public class ClaseDAO implements DAO<Clase>{
     private final static String FINBYID ="SELECT * from clases WHERE id=?";
     private final static String FINBYNAME ="SELECT * from clases WHERE nombre=?";
     private final static String INSERT ="INSERT INTO clases (nombre,precio) VALUES (?,?)";
-    private final static String UPDATE ="UPDATE clases SET nombre=?, precio=? WHERE id=?";
+    private final static String UPDATE ="UPDATE clases SET precio=? WHERE id=?";
     private final static String DELETE ="DELETE FROM clases WHERE id=?";
 
-    private final static String SAVERELACION ="INSERT INTO clases_alumnos (clase_id, alumnos_dni) VALUES (?,?)";
-    private final static String DELETERELACION ="DELETE FROM clases_alumnos WHERE clase_id = ? and alumnos_dni = ?";
+    private final static String SAVERELACION ="INSERT INTO clases_alumnos (clase_id, alumnos_dni, fecha) VALUES (?,?,?)";
+    private final static String DELETERELACION ="DELETE FROM clases_alumnos WHERE clase_id = ? and alumnos_dni = ? and fecha = ?";
 
     private Connection conn;
     public ClaseDAO(Connection conn) {
@@ -111,7 +114,7 @@ public class ClaseDAO implements DAO<Clase>{
         if(entity==null) {
             return result;
         }
-        Clase a = findById(entity.getId());
+        Clase a = findById(entity.getName());
         if(a == null) {
             //INSERT
             try(PreparedStatement pst=this.conn.prepareStatement(INSERT)){
@@ -124,9 +127,8 @@ public class ClaseDAO implements DAO<Clase>{
         }else {
             //UPDATE
             try(PreparedStatement pst=this.conn.prepareStatement(UPDATE)){
-                pst.setString(1, entity.getName());
-                pst.setDouble(2, entity.getPrice());
-                pst.setInt(3, a.getId());
+                pst.setDouble(1, entity.getPrice());
+                pst.setInt(2, a.getId());
                 pst.executeUpdate();
             }
             /** Clases */
@@ -183,10 +185,12 @@ public class ClaseDAO implements DAO<Clase>{
 
         alumno.addClase(clase);
         adao.save(alumno);
+        //Date fecha = new Date();
 
         try(PreparedStatement pst=this.conn.prepareStatement(SAVERELACION)){
             pst.setInt(1, clase.getId());
             pst.setString(2, alumno.getDni());
+            pst.setDate(3, java.sql.Date.valueOf(LocalDate.now()));
             pst.executeUpdate();
         }
         return alumno.getClases();
@@ -199,7 +203,7 @@ public class ClaseDAO implements DAO<Clase>{
      * @return list of classes that the student is enrolled in
      * @throws SQLException
      */
-    public List<Clase> removeAlumno(int id, String dni) throws SQLException {
+    public List<Clase> removeAlumno(int id, String dni, Date fecha) throws SQLException {
         AlumnoDAO adao = new AlumnoDAO(this.conn);
         Alumno alumno = adao.findById(dni);
         Clase clase = findById(id);
@@ -207,6 +211,7 @@ public class ClaseDAO implements DAO<Clase>{
         try(PreparedStatement pst=this.conn.prepareStatement(DELETERELACION)){
             pst.setInt(1, clase.getId());
             pst.setString(2, alumno.getDni());
+            pst.setDate(3, (java.sql.Date) fecha);
             pst.executeUpdate();
         }
         return alumno.getClases();

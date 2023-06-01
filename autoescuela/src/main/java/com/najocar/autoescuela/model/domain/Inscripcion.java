@@ -65,4 +65,14 @@ public class Inscripcion {
     public int hashCode() {
         return Objects.hash(id, name, date);
     }
+
+    @Override
+    public String toString() {
+        return "Inscripcion{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", date=" + date +
+                '}';
+    }
 }

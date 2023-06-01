@@ -3,13 +3,11 @@ package com.najocar.autoescuela.controllers;
 import com.najocar.autoescuela.App;
 import com.najocar.autoescuela.model.dao.AlumnoDAO;
 import com.najocar.autoescuela.model.dao.ClaseDAO;
-import com.najocar.autoescuela.model.domain.Alumno;
 import com.najocar.autoescuela.model.domain.Clase;
 import com.najocar.autoescuela.model.domain.Inscripcion;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -18,16 +16,13 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.StandardSocketOptions;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class AlumnInfoController extends Controller {
+public class HistorialAlumnoController extends Controller {
     @FXML
     private Pane navbar;
     @FXML
@@ -67,13 +62,8 @@ public class AlumnInfoController extends Controller {
     private double yOffset = 0;
 
     @FXML
-    public void returnMain() throws IOException {
-        App.setRoot("index");
-    }
-
-    @FXML
-    public void goHistory() throws IOException {
-        App.setRoot("historialAlumno");
+    public void goBack() throws IOException {
+        App.setRoot("alumnInfo");
     }
 
     @Override
@@ -128,7 +118,7 @@ public class AlumnInfoController extends Controller {
 
     @FXML
     public void generateTable() throws SQLException {
-        List<Inscripcion> aux = adao.alumnoAllRecentClases(controlDni.getDni());
+        List<Inscripcion> aux = adao.alumnoAllClases(controlDni.getDni());
         double precioTotal = 0;
         clases.setAll(aux);
         for (Inscripcion clase : clases) {
@@ -137,43 +127,10 @@ public class AlumnInfoController extends Controller {
         totalPrice.setText(String.valueOf(precioTotal) + "€");
         this.tabla.setItems(clases);
 
-        generateChoiceBox();
     }
 
     @FXML
-    public void generateChoiceBox() {
-        List<Clase> aux = null;
-        choice.getItems().removeAll(choice.getItems());
-        try {
-            aux = cdao.findAll();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        for (Clase clase : aux) {
-            if (!clases.stream().anyMatch(o -> o.getName().equals(clase.getName()))) {
-                this.choice.getItems().add(clase.getName());
-            }
-        }
-
-        /*
-        for (Clase clase : aux) {
-            for (Inscripcion inscripcion : clases) {
-                if (!inscripcion.getName().equals(clase.getName())){
-                    this.choice.getItems().add(clase.getName());
-                }
-                /*
-                if (!clases.contains(clase.getName())) {
-                    this.choice.getItems().add(clase.getName());
-                }
-
-
-            }
-        }*/
-    }
-
-    @FXML
-    public void addClass() throws SQLException {
+    public void choiceSelection() throws SQLException {
         if (choice.getValue() != null) {
             cdao.insertAlumno(cdao.findById((String) choice.getValue()).getId(), controlDni.getDni());
             generateTable();
@@ -184,10 +141,19 @@ public class AlumnInfoController extends Controller {
 
     // remove buttons
     @FXML
-    public void removeClass() throws SQLException {
+    public void removeFromB() throws SQLException {
         Inscripcion aux = tabla.getSelectionModel().getSelectedItem();
         if (aux != null){
             this.remove(cdao.findById(aux.getId()).getId(), aux.getDate());
+        }
+    }
+
+    private void add(int i) throws SQLException {
+        if (!clases.contains(cdao.findById(i))) {
+            cdao.insertAlumno(i, controlDni.getDni());
+            generateTable();
+        } else {
+            error(1);
         }
     }
 
@@ -203,6 +169,16 @@ public class AlumnInfoController extends Controller {
                 cdao.removeAlumno(i, controlDni.getDni(), fecha);
                 generateTable();;
             }
+            /*
+        if (clases.contains(cdao.findById(i))) {
+            quitError();
+            cdao.removeAlumno(i, controlDni.getDni());
+            generateTable();
+        } else {
+            //
+        }
+
+             */
     }
 
     public void error(int n) {

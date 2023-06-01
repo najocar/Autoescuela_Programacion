@@ -11,29 +11,19 @@ import java.util.ResourceBundle;
 
 public abstract class Controller implements Initializable {
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
+    public abstract void initialize(URL url, ResourceBundle resourceBundle);
 
     /**
      * Close window
      * @param event
      */
     @FXML
-    private void closeWindow(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
-    }
+    public abstract void closeWindow(ActionEvent event);
 
     /**
      * minimize window
      * @param event
      */
     @FXML
-    private void minimizeWindow(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.setIconified(true);
-    }
+    public abstract void minimizeWindow(ActionEvent event);
 }

@@ -101,6 +101,20 @@ public class IndexController extends Controller{
         tablaAlumnos.addListener(selectAlumno);
     }
 
+    @Override
+    public void closeWindow(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
+    }
+
+    @Override
+    public void minimizeWindow(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.setIconified(true);
+    }
+
     @FXML
     public void generateTable() {
         List<Alumno> aux = null;
@@ -125,7 +139,7 @@ public class IndexController extends Controller{
 
     public void changeViewToClases() {
         try {
-            App.setRoot("precioClases");
+            App.setRoot("clases");
         } catch (IOException e) {
             e.printStackTrace();
         }
