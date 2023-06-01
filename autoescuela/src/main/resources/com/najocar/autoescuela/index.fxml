@@ -73,7 +73,7 @@
           <TableColumn fx:id="colNombre" minWidth="2.0" prefWidth="284.0" text="Nombre" />
         </columns>
       </TableView>
-      <Button fx:id="infoAlumno1" layoutX="435.0" layoutY="658.0" mnemonicParsing="false" onAction="#changeViewToClases" prefHeight="53.0" prefWidth="203.0" styleClass="boton" text="Cambiar precio de Clases" textFill="WHITE">
+      <Button fx:id="infoAlumno1" layoutX="435.0" layoutY="658.0" mnemonicParsing="false" onAction="#changeViewToClases" prefHeight="53.0" prefWidth="203.0" styleClass="boton" text="Gestionar Clases" textFill="WHITE">
          <font>
             <Font name="Verdana" size="12.0" />
          </font>

@@ -23,8 +23,8 @@ public class AlumnoDAO implements DAO<Alumno> {
     private final static String DELETECLASES = "DELETE FROM clases_alumnos WHERE alumnos_dni=?";
     private final static String FINDBYCLASE = "SELECT * from clases_alumnos WHERE clase_id=?";
 
-    private final static String FINDALLCLASES = "SELECT c.id, c.nombre, c.precio, a.fecha from clases_alumnos a join clases c on a.clase_id = c.id WHERE a.alumnos_dni = ?";
-    private final static String FINDALLRECENTCLASES = "SELECT c.id, c.nombre, c.precio, a.fecha from clases_alumnos a join clases c on a.clase_id = c.id WHERE a.alumnos_dni = ? AND a.fecha > DATE_SUB(CURDATE(), INTERVAL 1 MONTH)";
+    private final static String FINDALLCLASES = "SELECT c.id, c.nombre, a.precio, a.fecha from clases_alumnos a join clases c on a.clase_id = c.id WHERE a.alumnos_dni = ?";
+    private final static String FINDALLRECENTCLASES = "SELECT c.id, c.nombre, a.precio, a.fecha from clases_alumnos a join clases c on a.clase_id = c.id WHERE a.alumnos_dni = ? AND a.fecha > DATE_SUB(CURDATE(), INTERVAL 1 MONTH)";
 
     private Connection conn;
 

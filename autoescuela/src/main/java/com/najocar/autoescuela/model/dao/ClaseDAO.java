@@ -24,7 +24,7 @@ public class ClaseDAO implements DAO<Clase>{
     private final static String UPDATE ="UPDATE clases SET precio=? WHERE id=?";
     private final static String DELETE ="DELETE FROM clases WHERE id=?";
 
-    private final static String SAVERELACION ="INSERT INTO clases_alumnos (clase_id, alumnos_dni, fecha) VALUES (?,?,?)";
+    private final static String SAVERELACION ="INSERT INTO clases_alumnos (clase_id, alumnos_dni, fecha, precio) VALUES (?,?,?,?)";
     private final static String DELETERELACION ="DELETE FROM clases_alumnos WHERE clase_id = ? and alumnos_dni = ? and fecha = ?";
 
     private Connection conn;
@@ -191,6 +191,7 @@ public class ClaseDAO implements DAO<Clase>{
             pst.setInt(1, clase.getId());
             pst.setString(2, alumno.getDni());
             pst.setDate(3, java.sql.Date.valueOf(LocalDate.now()));
+            pst.setDouble(4, clase.getPrice());
             pst.executeUpdate();
         }
         return alumno.getClases();

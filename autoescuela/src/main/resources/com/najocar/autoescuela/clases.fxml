@@ -70,8 +70,8 @@
       </Label>
       <TableView fx:id="tabla" fixedCellSize="30.0" layoutX="71.0" layoutY="183.0" prefHeight="441.0" prefWidth="568.0">
         <columns>
-          <TableColumn fx:id="colNombre" prefWidth="284.0" text="Nombre" />
-          <TableColumn fx:id="colPrecio" minWidth="2.0" prefWidth="284.0" text="Precio" />
+          <TableColumn fx:id="colNombre" prefWidth="284.0" resizable="false" text="Nombre" />
+          <TableColumn fx:id="colPrecio" minWidth="2.0" prefWidth="284.0" resizable="false" text="Precio" />
         </columns>
       </TableView>
       <Pane layoutX="-140.0" layoutY="87.0" prefHeight="393.0" prefWidth="122.0" style="-fx-background-color: #8d9ed0; -fx-rotate: 40px;" />
