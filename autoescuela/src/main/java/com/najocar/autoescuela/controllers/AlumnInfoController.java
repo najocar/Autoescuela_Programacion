@@ -22,10 +22,7 @@ import java.net.StandardSocketOptions;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class AlumnInfoController extends Controller {
     @FXML
@@ -42,6 +39,8 @@ public class AlumnInfoController extends Controller {
     private TableColumn colPrecio;
     @FXML
     private TableColumn colFecha;
+    @FXML
+    private TableColumn colFinaliza;
     @FXML
     private Label totalPrice;
     @FXML
@@ -101,6 +100,7 @@ public class AlumnInfoController extends Controller {
         this.colClase.setCellValueFactory(new PropertyValueFactory("name"));
         this.colPrecio.setCellValueFactory(new PropertyValueFactory("price"));
         this.colFecha.setCellValueFactory(new PropertyValueFactory("date"));
+        this.colFinaliza.setCellValueFactory(new PropertyValueFactory("dateEnd"));
 
         try {
             generateTable();
@@ -155,21 +155,6 @@ public class AlumnInfoController extends Controller {
                 this.choice.getItems().add(clase.getName());
             }
         }
-
-        /*
-        for (Clase clase : aux) {
-            for (Inscripcion inscripcion : clases) {
-                if (!inscripcion.getName().equals(clase.getName())){
-                    this.choice.getItems().add(clase.getName());
-                }
-                /*
-                if (!clases.contains(clase.getName())) {
-                    this.choice.getItems().add(clase.getName());
-                }
-
-
-            }
-        }*/
     }
 
     @FXML

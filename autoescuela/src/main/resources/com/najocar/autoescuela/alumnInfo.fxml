@@ -91,9 +91,10 @@
       </Label>
       <TableView fx:id="tabla" fixedCellSize="30.0" layoutX="71.0" layoutY="183.0" prefHeight="402.0" prefWidth="568.0">
          <columns>
-            <TableColumn fx:id="colClase" prefWidth="284.0" resizable="false" text="Clase" />
-            <TableColumn fx:id="colPrecio" minWidth="2.0" prefWidth="140.0" resizable="false" text="Precio" />
-            <TableColumn fx:id="colFecha" prefWidth="75.0" text="Fecha" />
+            <TableColumn fx:id="colClase" prefWidth="180.0" resizable="false" text="Clase" />
+            <TableColumn fx:id="colPrecio" minWidth="2.0" prefWidth="180.0" resizable="false" text="Precio" />
+            <TableColumn fx:id="colFecha" prefWidth="103.0" text="Fecha" />
+            <TableColumn fx:id="colFinaliza" prefWidth="103.0" text="Finaliza" />
          </columns>
       </TableView>
       <Label layoutX="70.0" layoutY="631.0" styleClass="bold" text="Precio total:">

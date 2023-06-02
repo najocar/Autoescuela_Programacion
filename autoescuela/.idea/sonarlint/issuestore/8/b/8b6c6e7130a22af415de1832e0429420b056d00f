@@ -1,0 +1,38 @@
+
+`	java:S112W"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+`	java:S112b"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+a	java:S112¥"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+E
+java:S3740#"/Provide the parametrized type for this generic.(©¬ßð
+J
+java:S3740%"/Provide the parametrized type for this generic.(Ž ’çøÿÿÿÿ
+J
+java:S3740'"/Provide the parametrized type for this generic.(¥Ïú­úÿÿÿÿ
+E
+java:S37401"/Provide the parametrized type for this generic.(ŽÍºÈ
+J
+java:S3740["/Provide the parametrized type for this generic.(èþææûÿÿÿÿ
+J
+java:S3740\"/Provide the parametrized type for this generic.(¶í€Àÿÿÿÿÿ
+J
+java:S3740]"/Provide the parametrized type for this generic.(±Æ´Âþÿÿÿÿ
+a
+java:S1301¹"KReplace this "switch" statement by "if" statements to increase readability.(Âúïi
+Q	java:S125f"<This block of commented-out lines of code should be removed.(ä¡Æ÷
+P
+java:S2175˜"9A "ObservableList<Inscripcion>" cannot contain a "Clase".(–Žø­
+V
+java:S4034¡":Replace this negation and "anyMatch()" with "noneMatch()".(‚–œêÿÿÿÿÿ
+m
+java:S2159£"VRemove this call to "equals"; comparisons between unrelated types always return false.(ÀÌ£…
+8
+java:S1116ª"Remove this empty statement.(¤º‚ûúÿÿÿÿ
+W	java:S125­"<This block of commented-out lines of code should be removed.(›üˆ—ùÿÿÿÿ
+7	java:S131¹""Add a default case to this switch.(Âúïi
+u
+java:S2142Ð"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(”ý¾
+T	java:S106Ñ"9Replace this use of System.out or System.err by a logger.(Þàš¬øÿÿÿÿ
+d
+java:S1128"GRemove this unused import 'com.najocar.autoescuela.model.domain.Clase'.(’å¢8Áè™º‡1
+?
+java:S1144—"(Remove this unused private "add" method.(ô¶×Ö

@@ -10,6 +10,7 @@ public class Inscripcion {
     private String name;
     private double price;
     private Date date;
+    private String dateEnd;
 
     public Inscripcion(String name, double price, Date date){
         this.name = name;
@@ -53,6 +54,14 @@ public class Inscripcion {
         this.date = date;
     }
 
+    public String getDateEnd() {
+        return dateEnd;
+    }
+
+    public void setDateEnd(String dateEnd) {
+        this.dateEnd = dateEnd;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,6 +82,7 @@ public class Inscripcion {
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", date=" + date +
+                ", dateEnd=" + dateEnd +
                 '}';
     }
 }

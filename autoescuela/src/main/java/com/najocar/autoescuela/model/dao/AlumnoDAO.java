@@ -9,7 +9,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class AlumnoDAO implements DAO<Alumno> {
@@ -23,8 +28,8 @@ public class AlumnoDAO implements DAO<Alumno> {
     private final static String DELETECLASES = "DELETE FROM clases_alumnos WHERE alumnos_dni=?";
     private final static String FINDBYCLASE = "SELECT * from clases_alumnos WHERE clase_id=?";
 
-    private final static String FINDALLCLASES = "SELECT c.id, c.nombre, a.precio, a.fecha from clases_alumnos a join clases c on a.clase_id = c.id WHERE a.alumnos_dni = ?";
-    private final static String FINDALLRECENTCLASES = "SELECT c.id, c.nombre, a.precio, a.fecha from clases_alumnos a join clases c on a.clase_id = c.id WHERE a.alumnos_dni = ? AND a.fecha > DATE_SUB(CURDATE(), INTERVAL 1 MONTH)";
+    private final static String FINDALLCLASES = "SELECT c.id, c.nombre, a.precio, a.fecha from clases_alumnos a join clases c on a.clase_id = c.id WHERE a.alumnos_dni = ? order by fecha desc";
+    private final static String FINDALLRECENTCLASES = "SELECT c.id, c.nombre, a.precio, a.fecha from clases_alumnos a join clases c on a.clase_id = c.id WHERE a.alumnos_dni = ? AND a.fecha > DATE_SUB(CURDATE(), INTERVAL 1 MONTH) order by fecha desc";
 
     private Connection conn;
 
@@ -241,6 +246,16 @@ public class AlumnoDAO implements DAO<Alumno> {
                     a.setName(res.getString("nombre"));
                     a.setPrice(res.getDouble("precio"));
                     a.setDate(res.getDate("fecha"));
+
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(a.getDate());
+                    calendar.add(Calendar.DAY_OF_YEAR, 30);
+                    Date nuevaFecha = calendar.getTime();
+                    SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+                    String nuevaFechaFormateada = formatoFecha.format(nuevaFecha);
+
+                    a.setDateEnd(nuevaFechaFormateada);
+
                     result.add(a);
                 }
             }

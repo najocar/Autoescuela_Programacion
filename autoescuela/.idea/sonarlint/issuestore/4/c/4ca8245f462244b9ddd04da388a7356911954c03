@@ -1,0 +1,33 @@
+
+`	java:S112R"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+>
+java:S5411f"(Use a primitive boolean expression here.(Õ¾Î
+D
+java:S5411‚"(Use a primitive boolean expression here.(Âš„ùÿÿÿÿ
+]
+java:S1126‚"AReplace this if-then-else statement by a single return statement.(Âš„ùÿÿÿÿ
+U
+java:S1854‘"9Remove this useless assignment to local variable "value".(’˜çöüÿÿÿÿ
+F
+java:S1481‘"*Remove this unused "value" local variable.(’˜çöüÿÿÿÿ
+U
+java:S1854¢"9Remove this useless assignment to local variable "value".(¡¾îÀıÿÿÿÿ
+F
+java:S1481¢"*Remove this unused "value" local variable.(¡¾îÀıÿÿÿÿ
+U
+java:S1854³"9Remove this useless assignment to local variable "value".(¿úÇºøÿÿÿÿ
+F
+java:S1481³"*Remove this unused "value" local variable.(¿úÇºøÿÿÿÿ
+P
+java:S1854Ä"9Remove this useless assignment to local variable "value".(Ñõ‹
+A
+java:S1481Ä"*Remove this unused "value" local variable.(Ñõ‹
+7	java:S131Î""Add a default case to this switch.(Õğ¨A
+^
+java:S1128"HRemove this unused import 'com.najocar.autoescuela.model.domain.Alumno'.(ÇĞ¾µ
+S
+java:S1128"=Remove this unused import 'javafx.collections.FXCollections'.(´¶²Æ
+a
+java:S1128"KRemove this unused import 'javafx.scene.control.cell.PropertyValueFactory'.(àÎ¬õ
+K
+java:S1128"5Remove this unused import 'javafx.scene.paint.Color'.(Ïî£à

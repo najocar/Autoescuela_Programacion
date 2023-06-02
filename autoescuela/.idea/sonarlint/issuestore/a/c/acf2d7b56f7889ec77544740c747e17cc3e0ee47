@@ -1,0 +1,33 @@
+
+Q
+java:S3740-"/Provide the parametrized type for this generic.(Æ øøÿÿÿÿ8•òµµ‡1
+d
+java:S11924"GDefine a constant instead of duplicating this literal "precio" 3 times.(«›…å8—òµµ‡1
+d
+java:S11923"GDefine a constant instead of duplicating this literal "nombre" 3 times.(¶Ù¥¶8—òµµ‡1
+
+java:S1186¦"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(©éÑr8Æòµµ‡1
+[
+java:S1124"EReorder the modifiers to comply with the Java Language Specification.(×Íâç
+[
+java:S1124"EReorder the modifiers to comply with the Java Language Specification.(Íœ¶á
+[
+java:S1124"EReorder the modifiers to comply with the Java Language Specification.(¯÷è
+[
+java:S1124"EReorder the modifiers to comply with the Java Language Specification.(·ÃŠ»
+[
+java:S1124"EReorder the modifiers to comply with the Java Language Specification.(Ãÿ®€
+`
+java:S1124"EReorder the modifiers to comply with the Java Language Specification.(òØ·‚şÿÿÿÿ
+[
+java:S1124"EReorder the modifiers to comply with the Java Language Specification.(ÎèÙò
+g
+java:S1124"EReorder the modifiers to comply with the Java Language Specification.(Éùşÿÿÿÿ8Îòµµ‡1
+^	java:S125´"<This block of commented-out lines of code should be removed.(ã€öóÿÿÿÿÿ8îòµµ‡1
+Y	java:S125¼"<This block of commented-out lines of code should be removed.(ıÚ…Â8ğòµµ‡1
+4
+java:S1128"Remove this duplicated import.(’å¢
+4
+java:S1128"Remove this duplicated import.(’å¢
+V
+java:S1128"4Remove this unused import 'java.time.LocalDateTime'.(æÃ§ƒüÿÿÿÿ8é‡Öº‡1
