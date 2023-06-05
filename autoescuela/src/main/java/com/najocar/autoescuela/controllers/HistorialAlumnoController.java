@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -127,88 +128,6 @@ public class HistorialAlumnoController extends Controller {
         totalPrice.setText(String.valueOf(precioTotal) + "€");
         this.tabla.setItems(clases);
 
-    }
-
-    @FXML
-    public void choiceSelection() throws SQLException {
-        if (choice.getValue() != null) {
-            cdao.insertAlumno(cdao.findById((String) choice.getValue()).getId(), controlDni.getDni());
-            generateTable();
-        } else {
-            error(2);
-        }
-    }
-
-    // remove buttons
-    @FXML
-    public void removeFromB() throws SQLException {
-        Inscripcion aux = tabla.getSelectionModel().getSelectedItem();
-        if (aux != null){
-            this.remove(cdao.findById(aux.getId()).getId(), aux.getDate());
-        }
-    }
-
-    private void add(int i) throws SQLException {
-        if (!clases.contains(cdao.findById(i))) {
-            cdao.insertAlumno(i, controlDni.getDni());
-            generateTable();
-        } else {
-            error(1);
-        }
-    }
-
-    private void remove(int i, Date fecha) throws SQLException {
-            if (!clases.stream().anyMatch(o -> {
-                try {
-                    return o.getName().equals(cdao.findById(i));
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            })) {
-                quitError();
-                cdao.removeAlumno(i, controlDni.getDni(), fecha);
-                generateTable();;
-            }
-            /*
-        if (clases.contains(cdao.findById(i))) {
-            quitError();
-            cdao.removeAlumno(i, controlDni.getDni());
-            generateTable();
-        } else {
-            //
-        }
-
-             */
-    }
-
-    public void error(int n) {
-        switch (n) {
-            case 1:
-                errorLabel.setText("Ya está inscrito a esta clase");
-                errorLabel.setVisible(true);
-                setTimeout(() -> errorLabel.setVisible(false), 1000);
-                break;
-            case 2:
-                errorLabel.setText("Debes seleccionar una clase");
-                errorLabel.setVisible(true);
-                setTimeout(() -> errorLabel.setVisible(false), 1000);
-                break;
-        }
-    }
-
-    public void quitError() {
-        errorLabel.setVisible(false);
-    }
-
-    public static void setTimeout(Runnable runnable, int delay) {
-        new Thread(() -> {
-            try {
-                Thread.sleep(delay);
-                runnable.run();
-            } catch (Exception e) {
-                System.err.println(e);
-            }
-        }).start();
     }
 
 }

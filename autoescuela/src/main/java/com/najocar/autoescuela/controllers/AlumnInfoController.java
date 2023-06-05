@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.net.StandardSocketOptions;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
 
@@ -176,7 +177,7 @@ public class AlumnInfoController extends Controller {
         }
     }
 
-    private void remove(int i, Date fecha) throws SQLException {
+    private void remove(int i, LocalDate fecha) throws SQLException {
             if (!clases.stream().anyMatch(o -> {
                 try {
                     return o.getName().equals(cdao.findById(i));

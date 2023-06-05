@@ -2,27 +2,27 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2023-06-01T14:47:22.113814Z</date>
-  <millis>1685630842113</millis>
-  <nanos>814000</nanos>
+  <date>2023-06-05T11:35:50.325477400Z</date>
+  <millis>1685964950325</millis>
+  <nanos>477400</nanos>
   <sequence>0</sequence>
   <logger>com.najocar.autoescuela.utils.Logger</logger>
   <level>INFO</level>
   <class>com.najocar.autoescuela.utils.Logger</class>
   <method>info</method>
   <thread>28</thread>
-  <message>Clase actualizada: Clase{id=0, name='A2', price='35.0'}</message>
+  <message>Alumno eliminado: Persona{dni='51213694P', name='jose carlos'}</message>
 </record>
 <record>
-  <date>2023-06-01T14:50:01.410727500Z</date>
-  <millis>1685631001410</millis>
-  <nanos>727500</nanos>
+  <date>2023-06-05T11:36:01.613404Z</date>
+  <millis>1685964961613</millis>
+  <nanos>404000</nanos>
   <sequence>1</sequence>
   <logger>com.najocar.autoescuela.utils.Logger</logger>
   <level>INFO</level>
   <class>com.najocar.autoescuela.utils.Logger</class>
   <method>info</method>
   <thread>28</thread>
-  <message>Clase actualizada: Clase{id=0, name='B', price='55.0'}</message>
+  <message>Alumno registrado: Persona{dni='51213694P', name='José Carlos'}</message>
 </record>
 </log>

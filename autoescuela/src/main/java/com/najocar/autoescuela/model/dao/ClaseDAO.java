@@ -6,14 +6,10 @@ import com.najocar.autoescuela.model.domain.Clase;
 import com.najocar.autoescuela.model.domain.Clase;
 import com.najocar.autoescuela.model.domain.Clase;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ClaseDAO implements DAO<Clase>{
@@ -204,7 +200,7 @@ public class ClaseDAO implements DAO<Clase>{
      * @return list of classes that the student is enrolled in
      * @throws SQLException
      */
-    public List<Clase> removeAlumno(int id, String dni, Date fecha) throws SQLException {
+    public List<Clase> removeAlumno(int id, String dni, LocalDate fecha) throws SQLException {
         AlumnoDAO adao = new AlumnoDAO(this.conn);
         Alumno alumno = adao.findById(dni);
         Clase clase = findById(id);
@@ -212,7 +208,7 @@ public class ClaseDAO implements DAO<Clase>{
         try(PreparedStatement pst=this.conn.prepareStatement(DELETERELACION)){
             pst.setInt(1, clase.getId());
             pst.setString(2, alumno.getDni());
-            pst.setDate(3, (java.sql.Date) fecha);
+            pst.setDate(3, Date.valueOf(fecha));
             pst.executeUpdate();
         }
         return alumno.getClases();

@@ -1,5 +1,6 @@
 package com.najocar.autoescuela.model.domain;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,10 +10,10 @@ public class Inscripcion {
     private int id;
     private String name;
     private double price;
-    private Date date;
-    private String dateEnd;
+    private LocalDate date;
+    private LocalDate dateEnd;
 
-    public Inscripcion(String name, double price, Date date){
+    public Inscripcion(String name, double price, LocalDate date){
         this.name = name;
         this.price = price;
         this.date = date;
@@ -46,19 +47,19 @@ public class Inscripcion {
         this.price = price;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public String getDateEnd() {
+    public LocalDate getDateEnd() {
         return dateEnd;
     }
 
-    public void setDateEnd(String dateEnd) {
+    public void setDateEnd(LocalDate dateEnd) {
         this.dateEnd = dateEnd;
     }
 

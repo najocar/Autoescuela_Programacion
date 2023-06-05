@@ -222,7 +222,7 @@ public class AlumnoDAO implements DAO<Alumno> {
                     a.setId(res.getInt("id"));
                     a.setName(res.getString("nombre"));
                     a.setPrice(res.getDouble("precio"));
-                    a.setDate(res.getDate("fecha"));
+                    a.setDate(res.getDate("fecha").toLocalDate());
                     result.add(a);
                 }
             }
@@ -245,16 +245,8 @@ public class AlumnoDAO implements DAO<Alumno> {
                     a.setId(res.getInt("id"));
                     a.setName(res.getString("nombre"));
                     a.setPrice(res.getDouble("precio"));
-                    a.setDate(res.getDate("fecha"));
-
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTime(a.getDate());
-                    calendar.add(Calendar.DAY_OF_YEAR, 30);
-                    Date nuevaFecha = calendar.getTime();
-                    SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
-                    String nuevaFechaFormateada = formatoFecha.format(nuevaFecha);
-
-                    a.setDateEnd(nuevaFechaFormateada);
+                    a.setDate(res.getDate("fecha").toLocalDate());
+                    a.setDateEnd(a.getDate().plusDays(30));
 
                     result.add(a);
                 }
