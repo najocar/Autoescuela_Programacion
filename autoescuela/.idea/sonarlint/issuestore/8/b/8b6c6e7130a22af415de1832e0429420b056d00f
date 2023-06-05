@@ -16,5 +16,11 @@ java:S3740]"/Provide the parametrized type for this generic.(¶í€Àÿÿÿÿÿ
 J
 java:S3740^"/Provide the parametrized type for this generic.(±Æ´Âþÿÿÿÿ
 Q	java:S125g"<This block of commented-out lines of code should be removed.(ä¡Æ÷
+d
+java:S1128"GRemove this unused import 'com.najocar.autoescuela.model.domain.Clase'.(’å¢8¾¬úÚˆ1
+R
+java:S1128"0Remove this unused import 'java.time.LocalDate'.(›‘¬èýÿÿÿÿ8¿¬úÚˆ1
+H
+java:S1128"+Remove this unused import 'java.util.Date'.(¸…¼ü8Á¬úÚˆ1
 E
 java:S1068:"(Remove this unused "cdao" private field.(¥·Õ8÷¿ÚÚˆ1
